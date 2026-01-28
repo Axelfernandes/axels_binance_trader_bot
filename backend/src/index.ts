@@ -8,6 +8,7 @@ import pool from './config/database';
 import tradingService from './services/trading.service';
 import binanceService from './services/binance.service';
 import logger from './utils/logger';
+import geminiService from './services/gemini.service';
 
 dotenv.config();
 
@@ -18,7 +19,10 @@ const server = http.createServer(app);
 // WebSocket Server
 const wss = new WebSocketServer({ server });
 
-const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT'];
+const symbols = [
+    'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
+    'PEPEUSDT', 'DOGEUSDT', 'SHIBUSDT', 'WIFUSDT', 'BONKUSDT', 'FETUSDT'
+];
 
 // Subscribe to Binance WebSockets
 binanceService.subscribeToMiniTickers(symbols, (ticker) => {
@@ -28,14 +32,14 @@ binanceService.subscribeToMiniTickers(symbols, (ticker) => {
         price: ticker.curDayClose,
     });
     
-    wss.clients.forEach((client) => {
+    wss.clients.forEach((client: any) => {
         if (client.readyState === 1) { // OPEN
             client.send(data);
         }
     });
 });
 
-wss.on('connection', (ws) => {
+wss.on('connection', (ws: any) => {
     logger.info('New WebSocket client connected');
     
     ws.on('close', () => {
@@ -46,8 +50,6 @@ wss.on('connection', (ws) => {
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// ... (rest of the file remains same, but using server.listen instead of app.listen)
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -184,6 +186,19 @@ app.post('/api/trading/stop', (req, res) => {
     }
 });
 
+// Get Market Brief
+app.get('/api/market-brief', async (req, res) => {
+    try {
+        const prices = await binanceService.client.prices();
+        const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
+        const data = symbols.map(s => `${s}: $${prices[s]}`).join(', ');
+        const brief = await geminiService.getMarketBrief(data);
+        res.json({ brief });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get dashboard stats
 app.get('/api/dashboard/stats', async (req, res) => {
     try {
@@ -236,8 +251,8 @@ app.get('/api/dashboard/stats', async (req, res) => {
 });
 
 // Start server
-server.listen(PORT, () => {
-    logger.info(`🚀 Server running on http://localhost:${PORT}`);
+server.listen(Number(PORT), '0.0.0.0', () => {
+    logger.info(`🚀 Server running on http://0.0.0.0:${PORT}`);
     logger.info(`Trading mode: ${process.env.TRADING_MODE || 'paper'}`);
 
     // Auto-start trading engine
@@ -245,6 +260,15 @@ server.listen(PORT, () => {
         logger.info('Auto-starting trading engine...');
         await tradingService.start();
     }, 2000);
+});
+
+// Global Error Handlers
+process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+    logger.error('Uncaught Exception:', err);
 });
 
 // Graceful shutdown

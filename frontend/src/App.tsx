@@ -26,6 +26,7 @@ interface Trade {
     status: string;
     opened_at: string;
     closed_at: string | null;
+    ai_analysis: string | null;
 }
 
 interface Signal {
@@ -39,6 +40,8 @@ interface Signal {
     max_risk_percent: string | null;
     rationale: string[];
     generated_at: string;
+    ai_confidence: number | null;
+    ai_comment: string | null;
 }
 
 function App() {
@@ -50,9 +53,11 @@ function App() {
     const [chartData, setChartData] = useState<Record<string, any[]>>({});
     const [loading, setLoading] = useState(true);
     const [scanning, setScanning] = useState(false);
+    const [marketBrief, setMarketBrief] = useState<string>('');
 
     useEffect(() => {
         fetchData();
+        fetchBrief();
         const interval = setInterval(fetchData, 10000); // Poll other data every 10s
         
         // WebSocket setup for real-time prices
@@ -75,6 +80,15 @@ function App() {
             ws.close();
         };
     }, []);
+
+    const fetchBrief = async () => {
+        try {
+            const res = await axios.get('/api/market-brief');
+            setMarketBrief(res.data.brief);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     const updateRealtimePrice = (symbol: string, price: string) => {
         setChartData(prev => {
@@ -171,6 +185,14 @@ function App() {
             </header>
 
             <main className="main-content">
+                {/* AI Market Brief */}
+                {marketBrief && (
+                    <div className="glass-card fade-in" style={{ borderLeft: '4px solid var(--accent-cyan)' }}>
+                        <div className="stat-label" style={{ marginBottom: '10px' }}>🤖 AI Market Intelligence</div>
+                        <p style={{ fontSize: '16px', lineHeight: '1.6' }}>{marketBrief}</p>
+                    </div>
+                )}
+
                 {/* Stats Grid */}
                 <div className="stats-grid">
                     <div className="stat-card fade-in">
@@ -227,6 +249,18 @@ function App() {
                                         {signal.direction}
                                     </span>
                                 </div>
+
+                                {signal.ai_confidence && (
+                                    <div className="signal-details" style={{ borderLeft: `4px solid ${signal.ai_confidence > 75 ? 'var(--profit-green)' : 'var(--warning-yellow)'}` }}>
+                                        <div className="signal-row">
+                                            <span className="text-muted">🤖 AI Confidence:</span>
+                                            <span className={signal.ai_confidence > 75 ? 'text-profit' : 'text-warning'}>{signal.ai_confidence}%</span>
+                                        </div>
+                                        <div className="text-secondary" style={{ fontSize: '12px', marginTop: '4px' }}>
+                                            "{signal.ai_comment}"
+                                        </div>
+                                    </div>
+                                )}
 
                                 {signal.direction === 'LONG' && (
                                     <div className="signal-details">
@@ -322,10 +356,9 @@ function App() {
                                 <thead>
                                     <tr>
                                         <th>Symbol</th>
-                                        <th>Entry</th>
-                                        <th>Exit</th>
-                                        <th>PnL ($)</th>
-                                        <th>PnL (%)</th>
+                                        <th>Entry/Exit</th>
+                                        <th>PnL ($ / %)</th>
+                                        <th>AI Analysis</th>
                                         <th>Status</th>
                                         <th>Closed At</th>
                                     </tr>
@@ -334,13 +367,20 @@ function App() {
                                     {closedTrades.map((trade) => (
                                         <tr key={trade.id}>
                                             <td><strong>{trade.symbol}</strong></td>
-                                            <td>${parseFloat(trade.entry_price).toFixed(2)}</td>
-                                            <td>${parseFloat(trade.exit_price || '0').toFixed(2)}</td>
-                                            <td className={parseFloat(trade.realized_pnl || '0') >= 0 ? 'text-profit' : 'text-loss'}>
-                                                {parseFloat(trade.realized_pnl || '0') >= 0 ? '+' : ''}${parseFloat(trade.realized_pnl || '0').toFixed(2)}
+                                            <td>
+                                                <div>${parseFloat(trade.entry_price).toFixed(2)}</div>
+                                                <div className="text-muted" style={{fontSize: '12px'}}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
                                             </td>
-                                            <td className={parseFloat(trade.realized_pnl_percent || '0') >= 0 ? 'text-profit' : 'text-loss'}>
-                                                {parseFloat(trade.realized_pnl_percent || '0') >= 0 ? '+' : ''}{parseFloat(trade.realized_pnl_percent || '0').toFixed(2)}%
+                                            <td>
+                                                <div className={parseFloat(trade.realized_pnl || '0') >= 0 ? 'text-profit' : 'text-loss'}>
+                                                    {parseFloat(trade.realized_pnl || '0') >= 0 ? '+' : ''}${parseFloat(trade.realized_pnl || '0').toFixed(2)}
+                                                </div>
+                                                <div className={parseFloat(trade.realized_pnl_percent || '0') >= 0 ? 'text-profit' : 'text-loss'} style={{fontSize: '12px'}}>
+                                                    {parseFloat(trade.realized_pnl_percent || '0') >= 0 ? '+' : ''}{parseFloat(trade.realized_pnl_percent || '0').toFixed(2)}%
+                                                </div>
+                                            </td>
+                                            <td style={{ maxWidth: '300px', fontSize: '13px' }}>
+                                                {trade.ai_analysis || <span className="text-muted">No analysis</span>}
                                             </td>
                                             <td>
                                                 <span className="badge neutral">{trade.status}</span>

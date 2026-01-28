@@ -16,10 +16,11 @@ docker compose up -d
 
 # 2. Start Backend
 echo "⚙️  Starting Backend..."
-# Kill any existing backend process on port 3001 to avoid conflicts
+# Kill any existing backend process on port 3001
 lsof -ti:3001 | xargs kill -9 >/dev/null 2>&1
 cd "$PROJECT_DIR/backend"
-nohup npm start > "$PROJECT_DIR/backend.log" 2>&1 &
+# Use direct node execution for stability
+nohup node dist/index.js > "$PROJECT_DIR/backend.log" 2>&1 &
 
 # 3. Start Frontend
 echo "💻 Starting Frontend UI..."
@@ -30,7 +31,7 @@ nohup npm run dev > "$PROJECT_DIR/frontend.log" 2>&1 &
 
 # 4. Wait and Open Dashboard
 echo "⏳ Waiting for servers to initialize..."
-sleep 5
+sleep 10
 echo "🌐 Opening Dashboard: http://localhost:3000"
 open "http://localhost:3000"
 

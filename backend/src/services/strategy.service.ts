@@ -12,6 +12,8 @@ export interface Signal {
     takeProfit3?: number;
     maxRiskPercent?: number;
     rationale: string[];
+    aiConfidence?: number;
+    aiComment?: string;
 }
 
 class StrategyService {

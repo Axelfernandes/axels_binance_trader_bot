@@ -33,7 +33,7 @@ export interface Order {
 }
 
 class BinanceService {
-    private client: ReturnType<typeof Binance>;
+    public client: ReturnType<typeof Binance>;
     private isPaperMode: boolean;
 
     constructor() {

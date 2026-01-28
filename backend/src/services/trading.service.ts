@@ -2,6 +2,7 @@ import { CandleChartInterval } from 'binance-api-node';
 import binanceService from './binance.service';
 import strategyService, { Signal } from './strategy.service';
 import riskService from './risk.service';
+import geminiService from './gemini.service';
 import pool from '../config/database';
 import logger from '../utils/logger';
 
@@ -17,7 +18,10 @@ interface Trade {
 }
 
 class TradingService {
-    private symbols: string[] = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT'];
+    private symbols: string[] = [
+        'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
+        'PEPEUSDT', 'DOGEUSDT', 'SHIBUSDT', 'WIFUSDT', 'BONKUSDT', 'FETUSDT'
+    ];
     private isRunning: boolean = false;
     private intervalId?: NodeJS.Timeout;
 
@@ -100,11 +104,23 @@ class TradingService {
             const signal = await strategyService.generateSignal(symbol, ohlcv);
 
             if (signal.direction !== 'NO_TRADE') {
-                logger.info(`Signal for ${symbol}: ${signal.direction}`);
-                logger.info(`Rationale: ${signal.rationale.join('; ')}`);
+                logger.info(`Technical signal for ${symbol}: ${signal.direction}`);
                 
+                // --- AI ENHANCEMENT: Analyze Signal with Gemini ---
+                const aiAnalysis = await geminiService.analyzeSignal(symbol, signal.rationale, ohlcv);
+                signal.aiConfidence = aiAnalysis.confidence;
+                signal.aiComment = aiAnalysis.comment;
+                
+                logger.info(`AI Analysis for ${symbol}: ${signal.aiConfidence}% confidence - ${signal.aiComment}`);
+
                 // Save signal to database
                 await this.saveSignal(signal);
+
+                // Risk Filter: Check AI Confidence before validating trade
+                if (signal.aiConfidence !== undefined && signal.aiConfidence < 75) {
+                    logger.warn(`Trade skipped: AI confidence too low (${signal.aiConfidence}%)`);
+                    return;
+                }
 
                 const validation = await riskService.validateTrade(signal, equity);
 
@@ -220,6 +236,10 @@ class TradingService {
                     parseFloat(trade.entry_price)) *
                 100;
 
+            // --- AI ENHANCEMENT: Post-Mortem Analysis ---
+            const tradeData = { ...trade, exit_price: exitPrice, realized_pnl: realizedPnl, realized_pnl_percent: realizedPnlPercent };
+            const aiAnalysis = await geminiService.analyzeTradeResult(tradeData);
+
             // Update trade in database
             await pool.query(
                 `UPDATE trades 
@@ -228,9 +248,10 @@ class TradingService {
              realized_pnl = $2, 
              realized_pnl_percent = $3,
              closed_at = NOW(),
-             notes = $4
-         WHERE id = $5`,
-                [exitPrice, realizedPnl, realizedPnlPercent, reason, trade.id]
+             notes = $4,
+             ai_analysis = $5
+         WHERE id = $6`,
+                [exitPrice, realizedPnl, realizedPnlPercent, reason, aiAnalysis, trade.id]
             );
 
             logger.info(
@@ -247,8 +268,8 @@ class TradingService {
     private async saveSignal(signal: Signal) {
         try {
             await pool.query(
-                `INSERT INTO signals (user_id, symbol, direction, entry_min, entry_max, stop_loss, take_profit_1, take_profit_2, max_risk_percent, rationale)
-         VALUES (1, $1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+                `INSERT INTO signals (user_id, symbol, direction, entry_min, entry_max, stop_loss, take_profit_1, take_profit_2, max_risk_percent, rationale, ai_confidence, ai_comment)
+         VALUES (1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
                 [
                     signal.symbol,
                     signal.direction,
@@ -259,6 +280,8 @@ class TradingService {
                     signal.takeProfit2 || null,
                     signal.maxRiskPercent || null,
                     JSON.stringify(signal.rationale),
+                    signal.aiConfidence || null,
+                    signal.aiComment || null,
                 ]
             );
         } catch (error: any) {
