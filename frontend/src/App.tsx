@@ -369,7 +369,7 @@ function App() {
                                             <td><strong>{trade.symbol}</strong></td>
                                             <td>
                                                 <div>${parseFloat(trade.entry_price).toFixed(2)}</div>
-                                                <div className="text-muted" style={{fontSize: '12px'}}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
+                                                <div className="text-muted" style={{fontSize: '14px'}}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
                                             </td>
                                             <td>
                                                 <div className={parseFloat(trade.realized_pnl || '0') >= 0 ? 'text-profit' : 'text-loss'}>

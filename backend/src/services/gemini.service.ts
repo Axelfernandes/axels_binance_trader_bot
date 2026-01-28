@@ -58,15 +58,16 @@ class GeminiService {
             const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
             const prompt = `
                 You are a professional crypto analyst. 
-                Summarize the current market state based on this data:
+                Summarize the current market state based on this detailed data for key cryptocurrencies:
                 ${marketData}
                 
-                Provide a 3-sentence summary highlighting the most interesting setup.
+                Provide a 3-sentence summary highlighting the most interesting setups, key price movements, significant trends, and potential volatility. Make it insightful and actionable.
             `;
 
             const result = await model.generateContent(prompt);
             return (await result.response).text();
         } catch (error: any) {
+            logger.error("Gemini Market Brief Error:", error.message);
             return "Unable to generate market brief at this time.";
         }
     }

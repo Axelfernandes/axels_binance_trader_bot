@@ -189,12 +189,18 @@ app.post('/api/trading/stop', (req, res) => {
 // Get Market Brief
 app.get('/api/market-brief', async (req, res) => {
     try {
-        const prices = await binanceService.client.prices();
-        const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
-        const data = symbols.map(s => `${s}: $${prices[s]}`).join(', ');
-        const brief = await geminiService.getMarketBrief(data);
+        const mainSymbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT'];
+        const marketDataPromises = mainSymbols.map(symbol => binanceService.get24hrTickerPriceChange(symbol));
+        const allMarketStats = await Promise.all(marketDataPromises);
+
+        const formattedMarketData = allMarketStats.map(stats => {
+            return `${stats.symbol}: Current Price: $${stats.lastPrice}, 24h Change: ${stats.priceChangePercent.toFixed(2)}%, High: $${stats.highPrice}, Low: $${stats.lowPrice}, Volume: ${stats.volume.toFixed(0)}`;
+        }).join('\n');
+
+        const brief = await geminiService.getMarketBrief(formattedMarketData);
         res.json({ brief });
     } catch (error: any) {
+        logger.error('Error fetching market brief:', error.message);
         res.status(500).json({ error: error.message });
     }
 });

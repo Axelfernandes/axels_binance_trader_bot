@@ -248,6 +248,41 @@ class BinanceService {
         }
         return false;
     }
+
+    /**
+     * Get 24-hour ticker price change statistics for a symbol
+     */
+    async get24hrTickerPriceChange(symbol: string) {
+        try {
+            const stats = await this.client.dailyStats({ symbol });
+            return {
+                symbol: stats.symbol,
+                priceChange: parseFloat(stats.priceChange),
+                priceChangePercent: parseFloat(stats.priceChangePercent),
+                weightedAvgPrice: parseFloat(stats.weightedAvgPrice),
+                prevClosePrice: parseFloat(stats.prevClosePrice),
+                lastPrice: parseFloat(stats.lastPrice),
+                lastQty: parseFloat(stats.lastQty),
+                bidPrice: parseFloat(stats.bidPrice),
+                bidQty: parseFloat(stats.bidQty),
+                askPrice: parseFloat(stats.askPrice),
+                askQty: parseFloat(stats.askQty),
+                openPrice: parseFloat(stats.openPrice),
+                highPrice: parseFloat(stats.highPrice),
+                lowPrice: parseFloat(stats.lowPrice),
+                volume: parseFloat(stats.volume),
+                quoteVolume: parseFloat(stats.quoteVolume),
+                openTime: stats.openTime,
+                closeTime: stats.closeTime,
+                firstId: stats.firstId,
+                lastId: stats.lastId,
+                count: stats.count,
+            };
+        } catch (error: any) {
+            logger.error(`Error fetching 24hr ticker for ${symbol}:`, error.message);
+            throw error;
+        }
+    }
 }
 
 export default new BinanceService();

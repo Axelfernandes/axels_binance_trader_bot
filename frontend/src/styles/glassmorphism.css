@@ -115,7 +115,7 @@ body {
 }
 
 .stat-label {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-secondary);
   font-weight: 500;
   text-transform: uppercase;
@@ -148,7 +148,7 @@ body {
 .glass-table thead th {
   text-align: left;
   padding: 12px 16px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
@@ -190,7 +190,7 @@ body {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
