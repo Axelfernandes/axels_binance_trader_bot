@@ -18,12 +18,10 @@ Axel's Binance Trader isn't just a bot; it's a **real-time execution terminal**.
 
 ---
 
-## 🛡️ Security & Access
-This installation is **Locked & Hardened**. 
-
-- **Single-User Restriction**: Exclusive access via AWS Cognito, restricted to one authorized developer email.
-- **Zero Public Sign-ups**: Self-registration is disabled at the infrastructure level.
-- **Secure Secret Vault**: All API keys and trading secrets are managed via AWS Secrets Manager / environment encryption.
+## 🌍 Open Access
+This installation is configured as a public **Open Terminal**.
+- **No Authentication**: The dashboard and API are publicly accessible.
+- **Public Data**: All trading data and signals can be viewed by anyone with the link.
 
 ---
 
@@ -41,7 +39,7 @@ A state-of-the-art **Glassmorphism UI** provides a 360-degree view of your opera
 | **Frontend** | React 18 + Vite (Deployed on Amplify) |
 | **Backend** | Node.js + TypeScript (Amplify Functions / Serverless) |
 | **Database** | **Amazon DynamoDB** (Amplify Gen 2 Data) |
-| **Auth** | Amazon Cognito + Custom Single-User Middleware |
+| **Auth** | **None** (Open Access) |
 
 ---
 

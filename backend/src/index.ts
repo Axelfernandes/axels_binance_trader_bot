@@ -9,7 +9,7 @@ import tradingService from './services/trading.service';
 import binanceService from './services/binance.service';
 import logger from './utils/logger';
 import geminiService from './services/gemini.service';
-import { authMiddleware } from './middleware/auth';
+// import { authMiddleware } from './middleware/auth';
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Apply Auth Middleware to all subsequent API routes
-app.use('/api', authMiddleware);
+// app.use('/api', authMiddleware);
 
 // Get account balance
 app.get('/api/account/balance', async (req, res) => {

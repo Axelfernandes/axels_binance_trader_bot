@@ -5,7 +5,7 @@ const schema = a.schema({
         total_equity: a.float().required(),
         available_balance: a.float().required(),
         timestamp: a.datetime().required(),
-    }).authorization(allow => [allow.authenticated()]),
+    }).authorization(allow => [allow.publicApiKey()]),
 
     Signal: a.model({
         symbol: a.string().required(),
@@ -19,7 +19,7 @@ const schema = a.schema({
         generated_at: a.datetime().required(),
         ai_confidence: a.integer(),
         ai_comment: a.string(),
-    }).authorization(allow => [allow.authenticated()]),
+    }).authorization(allow => [allow.publicApiKey()]),
 
     Trade: a.model({
         symbol: a.string().required(),
@@ -35,7 +35,7 @@ const schema = a.schema({
         opened_at: a.datetime().required(),
         closed_at: a.datetime(),
         ai_analysis: a.string(),
-    }).authorization(allow => [allow.authenticated()]),
+    }).authorization(allow => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -43,6 +43,9 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
     schema,
     authorizationModes: {
-        defaultAuthorizationMode: 'userPool',
+        defaultAuthorizationMode: 'apiKey',
+        apiKeyAuthorizationMode: {
+            expiresInDays: 30,
+        },
     },
 });

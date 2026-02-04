@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
-import { Authenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-import { fetchAuthSession } from 'aws-amplify/auth';
 
 interface DashboardStats {
     totalEquity: number;
@@ -62,27 +59,13 @@ function App() {
         if (import.meta.env.VITE_API_URL) {
             axios.defaults.baseURL = import.meta.env.VITE_API_URL;
         }
-
-        const interceptor = axios.interceptors.request.use(async (config) => {
-            try {
-                const session = await fetchAuthSession();
-                const token = session.tokens?.idToken?.toString();
-                if (token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
-            } catch (e) {
-                // ignore
-            }
-            return config;
-        });
-        return () => axios.interceptors.request.eject(interceptor);
     }, []);
 
     useEffect(() => {
         fetchData();
         fetchBrief();
         const interval = setInterval(fetchData, 10000); // Poll other data every 10s
-        
+
         // WebSocket setup for real-time prices
         const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const wsHost = window.location.hostname === 'localhost' ? 'localhost:3001' : window.location.host;
@@ -120,7 +103,7 @@ function App() {
 
             const lastCandle = currentData[currentData.length - 1];
             const newPrice = parseFloat(price);
-            
+
             // Update last candle
             const updatedCandle = {
                 ...lastCandle,
@@ -146,7 +129,7 @@ function App() {
             // Fetch klines for all symbols
             const klinePromises = allSymbols.map(s => axios.get(`/api/klines/${s}?limit=100`));
             const klineResponses = await Promise.all(klinePromises);
-            
+
             const newChartData: Record<string, any[]> = {};
             allSymbols.forEach((s, i) => {
                 newChartData[s] = klineResponses[i].data;
@@ -187,17 +170,15 @@ function App() {
     }
 
     return (
-        <Authenticator>
-            {({ signOut }) => (
         <div className="app">
             <header className="header">
                 <h1 className="logo">
                     <span className="logo-icon">₿</span> Binance Trader
                 </h1>
                 <div className="header-badge">
-                    <button onClick={signOut} className="badge warning" style={{ cursor: 'pointer', border: 'none', marginRight: '10px' }}>Sign Out</button>
-                    <button 
-                        className={`badge ${scanning ? 'loading' : 'success'}`} 
+                    {/* Sign Out button removed */}
+                    <button
+                        className={`badge ${scanning ? 'loading' : 'success'}`}
                         onClick={handleScanNow}
                         disabled={scanning}
                         style={{ cursor: 'pointer', border: 'none', font: 'inherit' }}
@@ -252,10 +233,10 @@ function App() {
                 {/* Charts Section */}
                 <section className="section">
                     <h2 className="section-title">Market Analysis</h2>
-                    <div className="charts-container" style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', 
-                        gap: '20px' 
+                    <div className="charts-container" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
+                        gap: '20px'
                     }}>
                         {allSymbols.map(symbol => (
                             chartData[symbol] && <PriceChart key={symbol} symbol={symbol} data={chartData[symbol]} />
@@ -395,13 +376,13 @@ function App() {
                                             <td><strong>{trade.symbol}</strong></td>
                                             <td>
                                                 <div>${parseFloat(trade.entry_price).toFixed(2)}</div>
-                                                <div className="text-muted" style={{fontSize: '14px'}}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
+                                                <div className="text-muted" style={{ fontSize: '14px' }}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
                                             </td>
                                             <td>
                                                 <div className={parseFloat(trade.realized_pnl || '0') >= 0 ? 'text-profit' : 'text-loss'}>
                                                     {parseFloat(trade.realized_pnl || '0') >= 0 ? '+' : ''}${parseFloat(trade.realized_pnl || '0').toFixed(2)}
                                                 </div>
-                                                <div className={parseFloat(trade.realized_pnl_percent || '0') >= 0 ? 'text-profit' : 'text-loss'} style={{fontSize: '12px'}}>
+                                                <div className={parseFloat(trade.realized_pnl_percent || '0') >= 0 ? 'text-profit' : 'text-loss'} style={{ fontSize: '12px' }}>
                                                     {parseFloat(trade.realized_pnl_percent || '0') >= 0 ? '+' : ''}{parseFloat(trade.realized_pnl_percent || '0').toFixed(2)}%
                                                 </div>
                                             </td>
@@ -421,8 +402,6 @@ function App() {
                 </section>
             </main>
         </div>
-        )}
-        </Authenticator>
     );
 }
 
