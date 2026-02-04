@@ -2,6 +2,26 @@
 
 A high-performance, automated algorithmic trading bot for Binance Spot, featuring a stunning Glassmorphism Dashboard and real-time execution logic.
 
+## ✨ Project Highlights
+
+- **Command the market in real time**: WebSocket-first architecture delivers instant price updates, live candles, and continuous signal evaluation.
+- **Multi-strategy edge**: EMA crossover, Bollinger mean reversion, and MACD momentum run in parallel to capture trend, range, and impulse opportunities.
+- **AI-powered confidence**: Gemini validates every signal, filters low-conviction trades, and explains the “why” behind each decision.
+- **Built-in risk discipline**: Position sizing, stop-loss protection, and daily drawdown limits keep the system on a professional leash.
+- **Show-stopping operator console**: A glassmorphism dashboard with live charts, AI insights, and full trade history.
+
+## 🧰 Technology Stack
+
+- **Backend**: Node.js, TypeScript, Express
+- **Realtime**: WebSockets (`ws`)
+- **Trading API**: Binance Node SDK
+- **AI**: Google Gemini
+- **Database**: PostgreSQL (Dockerized)
+- **Frontend**: React 18, Vite, Glassmorphism CSS
+- **Charts**: `lightweight-charts`, Recharts
+- **Auth**: AWS Amplify + Cognito
+- **Tooling**: Docker, macOS app bundles (`osacompile`)
+
 ## 🚀 Overview
 
 Axel's Binance Trader is a professional-grade trading system designed for low-latency market analysis and execution. Unlike traditional bots that rely on slow polling, this system utilizes **WebSockets** for millisecond-accurate data processing and a multi-strategy engine to capture high-probability setups across multiple assets.
