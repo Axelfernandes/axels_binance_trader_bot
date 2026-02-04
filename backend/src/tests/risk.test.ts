@@ -1,5 +1,5 @@
 import riskService from '../services/risk.service';
-import pool from '../config/database';
+// import pool from '../config/database';
 
 async function testRisk() {
     console.log('=== Risk Management Test ===\n');
@@ -65,7 +65,7 @@ async function testRisk() {
         console.error('\n❌ Test failed:', error.message);
         process.exit(1);
     } finally {
-        await pool.end();
+        // await pool.end();
     }
 
     process.exit(0);

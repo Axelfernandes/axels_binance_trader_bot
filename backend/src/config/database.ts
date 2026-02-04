@@ -1,24 +1,11 @@
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { Amplify } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/data';
+import outputs from '../../../amplify_outputs.json';
 
-dotenv.config();
+// Configure Amplify for backend usage
+Amplify.configure(outputs);
 
-export const pool = new Pool({
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    database: process.env.DB_NAME || 'binance_trader',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'postgres123',
-});
+// Create client (untyped to avoid rootDir issues with generated schema)
+const client = generateClient<any>();
 
-// Test connection
-pool.on('connect', () => {
-    console.log('✅ Connected to PostgreSQL database');
-});
-
-pool.on('error', (err) => {
-    console.error('❌ Unexpected database error:', err);
-    process.exit(-1);
-});
-
-export default pool;
+export default client;

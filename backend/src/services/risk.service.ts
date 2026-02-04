@@ -1,5 +1,5 @@
 import { Signal } from './strategy.service';
-import pool from '../config/database';
+import client from '../config/database';
 import logger from '../utils/logger';
 
 export interface RiskValidation {
@@ -124,14 +124,11 @@ class RiskService {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            const result = await pool.query(
-                `SELECT SUM(realized_pnl) as daily_pnl
-         FROM trades
-         WHERE closed_at >= $1 AND status = 'CLOSED'`,
-                [today]
-            );
+            const { data: allTrades } = await client.models.Trade.list({});
+            const closedTrades = allTrades.filter((t: any) => t.status === 'CLOSED');
 
-            const dailyPnl = parseFloat(result.rows[0]?.daily_pnl || '0');
+            const dailyTrades = closedTrades.filter((t: any) => new Date(t.closed_at) >= today);
+            const dailyPnl = dailyTrades.reduce((sum: number, t: any) => sum + (t.realized_pnl || 0), 0);
 
             // Get initial capital
             const initialCapital = parseFloat(process.env.INITIAL_CAPITAL || '100');
@@ -156,14 +153,14 @@ class RiskService {
      */
     async hasOpenPosition(symbol: string): Promise<boolean> {
         try {
-            const result = await pool.query(
-                `SELECT COUNT(*) as count
-         FROM trades
-         WHERE symbol = $1 AND status = 'OPEN'`,
-                [symbol]
-            );
+            const { data: openTrades } = await client.models.Trade.list({
+                filter: {
+                    symbol: { eq: symbol },
+                    status: { eq: 'OPEN' }
+                }
+            });
 
-            return parseInt(result.rows[0]?.count || '0') > 0;
+            return openTrades.length > 0;
         } catch (error: any) {
             logger.error('Error checking open positions:', error.message);
             return false;
@@ -175,11 +172,11 @@ class RiskService {
      */
     async getOpenPositionsCount(): Promise<number> {
         try {
-            const result = await pool.query(
-                `SELECT COUNT(*) as count FROM trades WHERE status = 'OPEN'`
-            );
+            const { data: openTrades } = await client.models.Trade.list({
+                filter: { status: { eq: 'OPEN' } }
+            });
 
-            return parseInt(result.rows[0]?.count || '0');
+            return openTrades.length;
         } catch (error: any) {
             logger.error('Error getting open positions count:', error.message);
             return 0;

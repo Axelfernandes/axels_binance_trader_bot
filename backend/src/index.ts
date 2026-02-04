@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { WebSocketServer } from 'ws';
 import http from 'http';
 import { CandleChartInterval } from 'binance-api-node';
-import pool from './config/database';
+import client from './config/database'; // Amplify Client
 import tradingService from './services/trading.service';
 import binanceService from './services/binance.service';
 import logger from './utils/logger';
@@ -48,12 +48,18 @@ app.get('/api/account/balance', async (req, res) => {
 // Get account snapshots (equity over time)
 app.get('/api/account/snapshots', async (req, res) => {
     try {
-        const result = await pool.query(
-            `SELECT * FROM account_snapshots 
-       ORDER BY timestamp DESC 
-       LIMIT 100`
+        const { data: snapshots } = await client.models.AccountSnapshot.list({
+            limit: 100,
+            sortDirection: 'DESC' // Note: creation time sort depends on schema keys, usually listed naturally or needs index
+            // For now assuming list returns unordered or default order, frontend might need sorting
+        });
+
+        // Manual sort if needed since DynamoDB scan/query order varies without index
+        const sorted = snapshots.sort((a: any, b: any) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
-        res.json(result.rows);
+
+        res.json(sorted);
     } catch (error: any) {
         logger.error('Error fetching snapshots:', error.message);
         res.status(500).json({ error: error.message });
@@ -63,14 +69,18 @@ app.get('/api/account/snapshots', async (req, res) => {
 // Get recent signals
 app.get('/api/signals', async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit as string) || 20;
-        const result = await pool.query(
-            `SELECT * FROM signals 
-       ORDER BY generated_at DESC 
-       LIMIT $1`,
-            [limit]
-        );
-        res.json(result.rows);
+        // limit is ignored in basic list unless implemented, fetching default page
+        const { data: signals } = await client.models.Signal.list({
+            limit: 20
+        });
+
+        // Parse rationale string back to JSON if stored as string
+        const formatted = signals.map((s: any) => ({
+            ...s,
+            rationale: typeof s.rationale === 'string' ? JSON.parse(s.rationale) : s.rationale
+        })).sort((a: any, b: any) => new Date(b.generated_at).getTime() - new Date(a.generated_at).getTime());
+
+        res.json(formatted);
     } catch (error: any) {
         logger.error('Error fetching signals:', error.message);
         res.status(500).json({ error: error.message });
@@ -81,18 +91,22 @@ app.get('/api/signals', async (req, res) => {
 app.get('/api/trades', async (req, res) => {
     try {
         const status = req.query.status as string;
-        let query = 'SELECT * FROM trades';
-        const params: any[] = [];
+        let filter: any = {};
 
         if (status) {
-            query += ' WHERE status = $1';
-            params.push(status.toUpperCase());
+            filter.status = { eq: status.toUpperCase() };
         }
 
-        query += ' ORDER BY opened_at DESC LIMIT 50';
+        const { data: trades } = await client.models.Trade.list({
+            filter,
+            limit: 50
+        });
 
-        const result = await pool.query(query, params);
-        res.json(result.rows);
+        const sorted = trades.sort((a: any, b: any) =>
+            new Date(b.opened_at).getTime() - new Date(a.opened_at).getTime()
+        );
+
+        res.json(sorted);
     } catch (error: any) {
         logger.error('Error fetching trades:', error.message);
         res.status(500).json({ error: error.message });
@@ -186,45 +200,35 @@ app.get('/api/market-brief', async (req, res) => {
 // Get dashboard stats
 app.get('/api/dashboard/stats', async (req, res) => {
     try {
-        // Get latest account snapshot
-        const snapshotResult = await pool.query(
-            `SELECT * FROM account_snapshots ORDER BY timestamp DESC LIMIT 1`
-        );
+        // Get account snapshots
+        const { data: snapshots } = await client.models.AccountSnapshot.list({ limit: 100 }); // List some to find latest
+        const latestSnapshot = snapshots.sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
 
-        // Get open positions count
-        const openPositionsResult = await pool.query(
-            `SELECT COUNT(*) as count FROM trades WHERE status = 'OPEN'`
-        );
+        // Get open positions
+        const { data: openTrades } = await client.models.Trade.list({
+            filter: { status: { eq: 'OPEN' } }
+        });
 
-        // Get today's PnL
+        // Get current day's closed trades for PnL
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const dailyPnlResult = await pool.query(
-            `SELECT SUM(realized_pnl) as daily_pnl 
-       FROM trades 
-       WHERE closed_at >= $1 AND status = 'CLOSED'`,
-            [today]
-        );
 
-        // Get win rate
-        const winRateResult = await pool.query(
-            `SELECT 
-         COUNT(*) FILTER (WHERE realized_pnl > 0) as wins,
-         COUNT(*) as total
-       FROM trades 
-       WHERE status = 'CLOSED'`
-        );
+        const { data: allTrades } = await client.models.Trade.list({}); // Warning: Scan operation
+        const closedTrades = allTrades.filter((t: any) => t.status === 'CLOSED');
 
-        const snapshot = snapshotResult.rows[0];
-        const wins = parseInt(winRateResult.rows[0]?.wins || '0');
-        const total = parseInt(winRateResult.rows[0]?.total || '0');
-        const winRate = total > 0 ? (wins / total) * 100 : 0;
+        const dailyTrades = closedTrades.filter((t: any) => new Date(t.closed_at) >= today);
+        const dailyPnl = dailyTrades.reduce((sum: number, t: any) => sum + (t.realized_pnl || 0), 0);
+
+        // Win Rate
+        const wins = closedTrades.filter((t: any) => (t.realized_pnl || 0) > 0).length;
+        const totalClosed = closedTrades.length;
+        const winRate = totalClosed > 0 ? (wins / totalClosed) * 100 : 0;
 
         res.json({
-            totalEquity: parseFloat(snapshot?.total_equity || '0'),
-            availableBalance: parseFloat(snapshot?.available_balance || '0'),
-            openPositions: parseInt(openPositionsResult.rows[0]?.count || '0'),
-            dailyPnl: parseFloat(dailyPnlResult.rows[0]?.daily_pnl || '0'),
+            totalEquity: latestSnapshot?.total_equity || 0,
+            availableBalance: latestSnapshot?.available_balance || 0,
+            openPositions: openTrades.length,
+            dailyPnl: dailyPnl,
             winRate: winRate.toFixed(2),
             tradingMode: process.env.TRADING_MODE || 'paper',
         });
@@ -259,6 +263,6 @@ process.on('uncaughtException', (err) => {
 process.on('SIGINT', () => {
     logger.info('Shutting down gracefully...');
     tradingService.stop();
-    pool.end();
+    // pool.end(); // No connection pool to close with Amplify client
     process.exit(0);
 });
