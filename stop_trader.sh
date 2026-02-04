@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # Stop script for Binance Trader
 PROJECT_DIR="/Users/axelfernandes/Desktop/applications/Binance_trader"
 echo "🛑 Stopping Binance Trader..."

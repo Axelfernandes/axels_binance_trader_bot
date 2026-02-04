@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 # Absolute path to the project
 PROJECT_DIR="/Users/axelfernandes/Desktop/applications/Binance_trader"

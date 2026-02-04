@@ -212,7 +212,7 @@ class BinanceService {
      */
     subscribeToTickers(symbols: string[], callback: (ticker: any) => void) {
         return this.client.ws.allTickers((tickers) => {
-            const filtered = (Array.isArray(tickers) ? tickers : [tickers]).filter((t) => 
+            const filtered = (Array.isArray(tickers) ? tickers : [tickers]).filter((t) =>
                 symbols.includes(t.symbol)
             );
             if (filtered.length > 0) {
@@ -254,7 +254,15 @@ class BinanceService {
      */
     async get24hrTickerPriceChange(symbol: string) {
         try {
-            const stats = await this.client.dailyStats({ symbol });
+            // Binance's dailyStats returns an array, even for a single symbol. We need to extract the first element.
+            // Explicitly cast to DailyStatsResult[] to satisfy TypeScript, assuming the API consistently returns an array for single symbol queries.
+            const statsArray = await this.client.dailyStats({ symbol });
+            const stats = Array.isArray(statsArray) ? statsArray[0] : statsArray;
+
+            if (!stats) {
+                throw new Error(`No daily stats found for symbol ${symbol}`);
+            }
+
             return {
                 symbol: stats.symbol,
                 priceChange: parseFloat(stats.priceChange),

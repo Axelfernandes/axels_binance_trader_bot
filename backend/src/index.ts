@@ -9,6 +9,7 @@ import tradingService from './services/trading.service';
 import binanceService from './services/binance.service';
 import logger from './utils/logger';
 import geminiService from './services/gemini.service';
+import { authMiddleware } from './middleware/auth';
 
 dotenv.config();
 
@@ -18,36 +19,10 @@ const server = http.createServer(app);
 
 // WebSocket Server
 const wss = new WebSocketServer({ server });
+// ... existing WS code ...
+// (I will need to be careful not to delete WS code by matching too much)
 
-const symbols = [
-    'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
-    'PEPEUSDT', 'DOGEUSDT', 'SHIBUSDT', 'WIFUSDT', 'BONKUSDT', 'FETUSDT'
-];
-
-// Subscribe to Binance WebSockets
-binanceService.subscribeToMiniTickers(symbols, (ticker) => {
-    const data = JSON.stringify({
-        type: 'PRICE_UPDATE',
-        symbol: ticker.symbol,
-        price: ticker.curDayClose,
-    });
-    
-    wss.clients.forEach((client: any) => {
-        if (client.readyState === 1) { // OPEN
-            client.send(data);
-        }
-    });
-});
-
-wss.on('connection', (ws: any) => {
-    logger.info('New WebSocket client connected');
-    
-    ws.on('close', () => {
-        logger.info('WebSocket client disconnected');
-    });
-});
-
-// Middleware
+// ...
 app.use(cors());
 app.use(express.json());
 
@@ -55,6 +30,9 @@ app.use(express.json());
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Apply Auth Middleware to all subsequent API routes
+app.use('/api', authMiddleware);
 
 // Get account balance
 app.get('/api/account/balance', async (req, res) => {

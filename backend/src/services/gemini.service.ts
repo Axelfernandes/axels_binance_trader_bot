@@ -18,7 +18,7 @@ class GeminiService {
 
             const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-            const candleSummary = candles.slice(-10).map(c => 
+            const candleSummary = candles.slice(-10).map(c =>
                 `Price: $${c.close}, Vol: ${c.volume}`
             ).join('\n');
 
@@ -38,7 +38,7 @@ class GeminiService {
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
-            
+
             // Clean up the response if it contains markdown code blocks
             const cleanedText = text.replace(/```json/g, "").replace(/```/g, "").trim();
             return JSON.parse(cleanedText);
@@ -93,6 +93,7 @@ class GeminiService {
             const result = await model.generateContent(prompt);
             return (await result.response).text();
         } catch (error: any) {
+            logger.error("Gemini Trade Analysis Error:", error.message);
             return "Trade analysis unavailable.";
         }
     }

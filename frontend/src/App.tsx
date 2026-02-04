@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 interface DashboardStats {
     totalEquity: number;
@@ -54,6 +57,26 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [scanning, setScanning] = useState(false);
     const [marketBrief, setMarketBrief] = useState<string>('');
+
+    useEffect(() => {
+        if (import.meta.env.VITE_API_URL) {
+            axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+        }
+
+        const interceptor = axios.interceptors.request.use(async (config) => {
+            try {
+                const session = await fetchAuthSession();
+                const token = session.tokens?.idToken?.toString();
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
+            } catch (e) {
+                // ignore
+            }
+            return config;
+        });
+        return () => axios.interceptors.request.eject(interceptor);
+    }, []);
 
     useEffect(() => {
         fetchData();
@@ -164,12 +187,15 @@ function App() {
     }
 
     return (
+        <Authenticator>
+            {({ signOut }) => (
         <div className="app">
             <header className="header">
                 <h1 className="logo">
                     <span className="logo-icon">₿</span> Binance Trader
                 </h1>
                 <div className="header-badge">
+                    <button onClick={signOut} className="badge warning" style={{ cursor: 'pointer', border: 'none', marginRight: '10px' }}>Sign Out</button>
                     <button 
                         className={`badge ${scanning ? 'loading' : 'success'}`} 
                         onClick={handleScanNow}
@@ -395,6 +421,8 @@ function App() {
                 </section>
             </main>
         </div>
+        )}
+        </Authenticator>
     );
 }
 
