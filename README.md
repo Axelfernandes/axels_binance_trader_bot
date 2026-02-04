@@ -39,27 +39,41 @@ A state-of-the-art **Glassmorphism UI** provides a 360-degree view of your opera
 | Flow | Tech |
 | :--- | :--- |
 | **Frontend** | React 18 + Vite (Deployed on Amplify) |
-| **Backend** | Node.js + TypeScript (Amplify Functions / Private VPC) |
-| **Database** | PostgreSQL (Amazon RDS / Local Docker) |
-| **Auth** | Amazon Cognito + Custom Middleware |
+| **Backend** | Node.js + TypeScript (Amplify Functions / Serverless) |
+| **Database** | **Amazon DynamoDB** (Amplify Gen 2 Data) |
+| **Auth** | Amazon Cognito + Custom Single-User Middleware |
 
 ---
 
-## 🚦 Quick Start
+## 🚦 Quick Start with Amplify Gen 2
 
 1. **Clone & Config**:
    ```bash
    git clone https://github.com/Axelfernandes/Binance_trader
    cp .env.example .env
    ```
-2. **Local Preview (Docker required)**:
+2. **Install Dependencies**:
    ```bash
-   sh start_trader.sh
+   npm install
    ```
-3. **Amplify Deployment**:
+3. **Amplify Sandbox (Local Dev)**:
    ```bash
-   amplify push
+   npx amplify sandbox
    ```
+   *This starts a local development environment with your DynamoDB tables.*
+
+4. **Production Deployment**:
+   Push to the `main` branch to trigger the Amplify console deployment:
+   ```bash
+   git push origin main
+   ```
+
+### 🔑 Environment Variables (Amplify Console)
+Ensure these are set in your Amplify App settings:
+- `VITE_API_URL`: Your backend API URL
+- `ALLOWED_EMAIL`: The authorized user email
+- `GEMINI_API_KEY`: Google Gemini API Key
+- `BINANCE_API_KEY` & `BINANCE_API_SECRET`: Trading credentials
 
 ---
 
