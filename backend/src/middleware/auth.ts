@@ -33,7 +33,15 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
         const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
         const payload = await verifier.verify(token);
-        
+
+        // Enforce single-email restriction
+        const allowedEmail = process.env.ALLOWED_EMAIL;
+        if (allowedEmail && payload.email !== allowedEmail) {
+            logger.warn(`Unauthorized access attempt from: ${payload.email}`);
+            res.status(403).json({ error: "Access denied. Unauthorized user." });
+            return;
+        }
+
         (req as any).user = payload;
         next();
     } catch (err: any) {
