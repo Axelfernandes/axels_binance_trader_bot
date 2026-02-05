@@ -267,7 +267,7 @@ function App() {
                                     <div key={signal.id} className="glass-card signal-card fade-in">
                                         <div className="signal-header">
                                             <h3 className="signal-symbol">{signal.symbol}</h3>
-                                            <span className={`badge ${signal.direction === 'LONG' ? 'success' : 'neutral'}`}>
+                                            <span className={`badge ${signal.direction === 'LONG' ? 'success' : (signal.direction === 'SHORT' ? 'danger' : 'neutral')}`}>
                                                 {signal.direction}
                                             </span>
                                         </div>
@@ -304,6 +304,28 @@ function App() {
                                                 </div>
                                             </div>
                                         )}
+
+                                        {signal.direction === 'SHORT' && (
+                                            <div className="signal-details">
+                                                <div className="signal-row">
+                                                    <span className="text-muted">Entry:</span>
+                                                    <span>${parseFloat(signal.entry_min || '0').toFixed(2)}</span>
+                                                </div>
+                                                <div className="signal-row">
+                                                    <span className="text-muted">Stop Loss:</span>
+                                                    <span className="text-profit">${parseFloat(signal.stop_loss || '0').toFixed(2)}</span>
+                                                </div>
+                                                <div className="signal-row">
+                                                    <span className="text-muted">Take Profit:</span>
+                                                    <span className="text-loss">${parseFloat(signal.take_profit_1 || '0').toFixed(2)}</span>
+                                                </div>
+                                                <div className="signal-row">
+                                                    <span className="text-muted">Max Risk:</span>
+                                                    <span>{signal.max_risk_percent}%</span>
+                                                </div>
+                                            </div>
+                                        )}
+
 
                                         <div className="signal-rationale">
                                             <div className="text-muted" style={{ fontSize: '12px', marginBottom: '8px' }}>Rationale:</div>
@@ -354,8 +376,8 @@ function App() {
                                                     </td>
                                                     <td>${parseFloat(trade.entry_price).toFixed(2)}</td>
                                                     <td>{parseFloat(trade.quantity).toFixed(6)}</td>
-                                                    <td className="text-loss">${parseFloat(trade.stop_loss).toFixed(2)}</td>
-                                                    <td className="text-profit">${parseFloat(trade.take_profit).toFixed(2)}</td>
+                                                    <td className={trade.side === 'BUY' ? 'text-loss' : 'text-profit'}>${parseFloat(trade.stop_loss).toFixed(2)}</td>
+                                                    <td className={trade.side === 'BUY' ? 'text-profit' : 'text-loss'}>${parseFloat(trade.take_profit).toFixed(2)}</td>
                                                     <td className="text-muted">{new Date(trade.opened_at).toLocaleString()}</td>
                                                 </tr>
                                             ))}
@@ -417,15 +439,7 @@ function App() {
                         </section>
                     </main>
                 </div>
-    );
-
-    if (DEV_MODE) {
-        return content();
-    }
-
-    return (
-        <Authenticator>
-            {({ signOut }) => content(signOut)}
+            )}
         </Authenticator>
     );
 }
