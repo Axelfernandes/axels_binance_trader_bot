@@ -181,12 +181,18 @@ class StrategyService {
         const currRSI = rsi[rsi.length - 1];
 
         const bullishCross = prevEMA20 <= prevEMA50 && currEMA20 > currEMA50;
+        const bearishCross = prevEMA20 >= prevEMA50 && currEMA20 < currEMA50;
 
         if (bullishCross && currRSI > 45 && currRSI < 70) {
             rationale.push("Strategy: EMA Crossover Detected (20/50)");
             rationale.push(`RSI is at ${currRSI.toFixed(2)} confirming trend`);
             
             return this.createLongSignal(symbol, currentPrice, rationale);
+        } else if (bearishCross && currRSI < 55 && currRSI > 30) {
+            rationale.push("Strategy: EMA Crossover Detected (20/50)");
+            rationale.push(`RSI is at ${currRSI.toFixed(2)} confirming downtrend`);
+
+            return this.createShortSignal(symbol, currentPrice, rationale);
         }
 
         // Strategy 2: Bollinger Bands Mean Reversion (Range Trading)
@@ -200,6 +206,12 @@ class StrategyService {
             rationale.push(`RSI is oversold (${currRSI.toFixed(2)})`);
             
             return this.createLongSignal(symbol, currentPrice, rationale);
+        } else if (currentPrice >= currUpperBB && currRSI > 65) {
+            rationale.push("Strategy: Bollinger Bands Mean Reversion");
+            rationale.push(`Price ($${currentPrice.toFixed(2)}) touched upper band ($${currUpperBB.toFixed(2)})`);
+            rationale.push(`RSI is overbought (${currRSI.toFixed(2)})`);
+
+            return this.createShortSignal(symbol, currentPrice, rationale);
         }
 
         // Strategy 3: MACD Momentum
@@ -212,6 +224,11 @@ class StrategyService {
             rationale.push(`Momentum shifted to positive`);
             
             return this.createLongSignal(symbol, currentPrice, rationale);
+        } else if (prevHist > 0 && currHist < 0 && currRSI < 50) {
+            rationale.push("Strategy: MACD Histogram Crossover");
+            rationale.push(`Momentum shifted to negative`);
+
+            return this.createShortSignal(symbol, currentPrice, rationale);
         }
 
         // Default: No trade
@@ -242,6 +259,23 @@ class StrategyService {
         };
     }
 
+    private createShortSignal(symbol: string, currentPrice: number, rationale: string[]): Signal {
+        const stopLoss = currentPrice * 1.05; // 5% stop loss
+        const riskAmount = stopLoss - currentPrice;
+        const takeProfit1 = currentPrice - riskAmount * 2; // 2:1 RR
+
+        return {
+            symbol,
+            direction: 'SHORT',
+            entryMin: currentPrice * 1.002,
+            entryMax: currentPrice * 0.998,
+            stopLoss,
+            takeProfit1,
+            maxRiskPercent: 5.0,
+            rationale,
+        };
+    }
+
     /**
      * Check if we should exit an open position
      */
@@ -252,15 +286,22 @@ class StrategyService {
         takeProfit: number,
         ohlcv: OHLCV[],
         maShort: number = 20,
-        maLong: number = 50
+        maLong: number = 50,
+        direction: 'LONG' | 'SHORT' // Added direction to function signature
     ): { shouldExit: boolean; reason: string } {
         // Stop-loss hit
-        if (currentPrice <= stopLoss) {
+        if (direction === 'LONG' && currentPrice <= stopLoss) {
+            return { shouldExit: true, reason: 'Stop-loss triggered' };
+        }
+        if (direction === 'SHORT' && currentPrice >= stopLoss) {
             return { shouldExit: true, reason: 'Stop-loss triggered' };
         }
 
         // Take-profit hit
-        if (currentPrice >= takeProfit) {
+        if (direction === 'LONG' && currentPrice >= takeProfit) {
+            return { shouldExit: true, reason: 'Take-profit target reached' };
+        }
+        if (direction === 'SHORT' && currentPrice <= takeProfit) {
             return { shouldExit: true, reason: 'Take-profit target reached' };
         }
 
@@ -276,8 +317,14 @@ class StrategyService {
 
         // Bearish crossover (exit long position)
         const bearishCrossover = prevEMAShort >= prevEMALong && currentEMAShort < currentEMALong;
-        if (bearishCrossover) {
+        // Bullish crossover (exit short position)
+        const bullishCrossover = prevEMAShort <= prevEMALong && currentEMAShort > currentEMALong;
+
+        if (direction === 'LONG' && bearishCrossover) {
             return { shouldExit: true, reason: 'Trend reversal detected (bearish crossover)' };
+        }
+        if (direction === 'SHORT' && bullishCrossover) {
+            return { shouldExit: true, reason: 'Trend reversal detected (bullish crossover)' };
         }
 
         return { shouldExit: false, reason: '' };

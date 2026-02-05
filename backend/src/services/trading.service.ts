@@ -197,11 +197,14 @@ class TradingService {
                 const ohlcv = await binanceService.getKlines(trade.symbol, CandleChartInterval.ONE_MINUTE, 100);
 
                 const exitCheck = strategyService.shouldExitPosition(
-                    trade.entry_price,
+                    parseFloat(trade.entry_price),
                     currentPrice,
-                    trade.stop_loss,
-                    trade.take_profit,
-                    ohlcv
+                    parseFloat(trade.stop_loss),
+                    parseFloat(trade.take_profit),
+                    ohlcv,
+                    undefined,
+                    undefined,
+                    trade.side as 'LONG' | 'SHORT'
                 );
 
                 if (exitCheck.shouldExit) {
