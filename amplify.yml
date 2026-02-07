@@ -3,8 +3,8 @@ backend:
   phases:
     build:
       commands:
-        - npm ci
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        - cd amplify && npm ci
+        - cd amplify && npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
     preBuild:
