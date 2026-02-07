@@ -1,20 +1,26 @@
 version: 1
-applications:
-  - appRoot: frontend
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm ci
-        build:
-          commands:
-            # Explicitly make variables available during the build for Vite
-            - echo "VITE_API_URL=$VITE_API_URL" >> .env.production
-            - npm run build
-      artifacts:
-        baseDirectory: dist
-        files:
-          - "**/*"
-      cache:
-        paths:
-          - node_modules/**/*
+backend:
+  phases:
+    build:
+      commands:
+        - npm ci
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd frontend && npm ci
+    build:
+      commands:
+        - cd frontend && echo "VITE_API_URL=$VITE_API_URL" >> .env.production
+        # Copy the generated outputs file to where frontend expects it
+        - cp amplify_outputs.json frontend/src/amplify_outputs.json
+        - cd frontend && npm run build
+  artifacts:
+    baseDirectory: frontend/dist
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - frontend/node_modules/**/*

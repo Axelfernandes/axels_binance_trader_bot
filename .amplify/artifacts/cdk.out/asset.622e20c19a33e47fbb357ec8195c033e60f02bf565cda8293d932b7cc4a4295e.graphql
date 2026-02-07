@@ -1,0 +1,513 @@
+type AccountSnapshot @aws_iam @aws_api_key {
+  total_equity: Float!
+  available_balance: Float!
+  timestamp: AWSDateTime!
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Signal @aws_iam @aws_api_key {
+  symbol: String!
+  direction: SignalDirection
+  entry_min: Float
+  entry_max: Float
+  stop_loss: Float
+  take_profit_1: Float
+  max_risk_percent: Float
+  rationale: AWSJSON
+  generated_at: AWSDateTime!
+  ai_confidence: Int
+  ai_comment: String
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Trade @aws_iam @aws_api_key {
+  symbol: String!
+  side: TradeSide
+  entry_price: Float!
+  exit_price: Float
+  quantity: Float!
+  stop_loss: Float!
+  take_profit: Float!
+  realized_pnl: Float
+  realized_pnl_percent: Float
+  status: String!
+  opened_at: AWSDateTime!
+  closed_at: AWSDateTime
+  ai_analysis: String
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum SignalDirection {
+  LONG
+  SHORT
+}
+
+enum TradeSide {
+  BUY
+  SELL
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelAccountSnapshotConnection @aws_api_key @aws_iam {
+  items: [AccountSnapshot]!
+  nextToken: String
+}
+
+input ModelAccountSnapshotFilterInput {
+  total_equity: ModelFloatInput
+  available_balance: ModelFloatInput
+  timestamp: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelAccountSnapshotFilterInput]
+  or: [ModelAccountSnapshotFilterInput]
+  not: ModelAccountSnapshotFilterInput
+}
+
+type Query {
+  getAccountSnapshot(id: ID!): AccountSnapshot @aws_api_key @aws_iam
+  listAccountSnapshots(filter: ModelAccountSnapshotFilterInput, limit: Int, nextToken: String): ModelAccountSnapshotConnection @aws_api_key @aws_iam
+  getSignal(id: ID!): Signal @aws_api_key @aws_iam
+  listSignals(filter: ModelSignalFilterInput, limit: Int, nextToken: String): ModelSignalConnection @aws_api_key @aws_iam
+  getTrade(id: ID!): Trade @aws_api_key @aws_iam
+  listTrades(filter: ModelTradeFilterInput, limit: Int, nextToken: String): ModelTradeConnection @aws_api_key @aws_iam
+}
+
+input ModelAccountSnapshotConditionInput {
+  total_equity: ModelFloatInput
+  available_balance: ModelFloatInput
+  timestamp: ModelStringInput
+  and: [ModelAccountSnapshotConditionInput]
+  or: [ModelAccountSnapshotConditionInput]
+  not: ModelAccountSnapshotConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateAccountSnapshotInput {
+  total_equity: Float!
+  available_balance: Float!
+  timestamp: AWSDateTime!
+  id: ID
+}
+
+input UpdateAccountSnapshotInput {
+  total_equity: Float
+  available_balance: Float
+  timestamp: AWSDateTime
+  id: ID!
+}
+
+input DeleteAccountSnapshotInput {
+  id: ID!
+}
+
+type Mutation {
+  createAccountSnapshot(input: CreateAccountSnapshotInput!, condition: ModelAccountSnapshotConditionInput): AccountSnapshot @aws_api_key @aws_iam
+  updateAccountSnapshot(input: UpdateAccountSnapshotInput!, condition: ModelAccountSnapshotConditionInput): AccountSnapshot @aws_api_key @aws_iam
+  deleteAccountSnapshot(input: DeleteAccountSnapshotInput!, condition: ModelAccountSnapshotConditionInput): AccountSnapshot @aws_api_key @aws_iam
+  createSignal(input: CreateSignalInput!, condition: ModelSignalConditionInput): Signal @aws_api_key @aws_iam
+  updateSignal(input: UpdateSignalInput!, condition: ModelSignalConditionInput): Signal @aws_api_key @aws_iam
+  deleteSignal(input: DeleteSignalInput!, condition: ModelSignalConditionInput): Signal @aws_api_key @aws_iam
+  createTrade(input: CreateTradeInput!, condition: ModelTradeConditionInput): Trade @aws_api_key @aws_iam
+  updateTrade(input: UpdateTradeInput!, condition: ModelTradeConditionInput): Trade @aws_api_key @aws_iam
+  deleteTrade(input: DeleteTradeInput!, condition: ModelTradeConditionInput): Trade @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionAccountSnapshotFilterInput {
+  total_equity: ModelSubscriptionFloatInput
+  available_balance: ModelSubscriptionFloatInput
+  timestamp: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionAccountSnapshotFilterInput]
+  or: [ModelSubscriptionAccountSnapshotFilterInput]
+}
+
+type Subscription {
+  onCreateAccountSnapshot(filter: ModelSubscriptionAccountSnapshotFilterInput): AccountSnapshot @aws_subscribe(mutations: ["createAccountSnapshot"]) @aws_api_key @aws_iam
+  onUpdateAccountSnapshot(filter: ModelSubscriptionAccountSnapshotFilterInput): AccountSnapshot @aws_subscribe(mutations: ["updateAccountSnapshot"]) @aws_api_key @aws_iam
+  onDeleteAccountSnapshot(filter: ModelSubscriptionAccountSnapshotFilterInput): AccountSnapshot @aws_subscribe(mutations: ["deleteAccountSnapshot"]) @aws_api_key @aws_iam
+  onCreateSignal(filter: ModelSubscriptionSignalFilterInput): Signal @aws_subscribe(mutations: ["createSignal"]) @aws_api_key @aws_iam
+  onUpdateSignal(filter: ModelSubscriptionSignalFilterInput): Signal @aws_subscribe(mutations: ["updateSignal"]) @aws_api_key @aws_iam
+  onDeleteSignal(filter: ModelSubscriptionSignalFilterInput): Signal @aws_subscribe(mutations: ["deleteSignal"]) @aws_api_key @aws_iam
+  onCreateTrade(filter: ModelSubscriptionTradeFilterInput): Trade @aws_subscribe(mutations: ["createTrade"]) @aws_api_key @aws_iam
+  onUpdateTrade(filter: ModelSubscriptionTradeFilterInput): Trade @aws_subscribe(mutations: ["updateTrade"]) @aws_api_key @aws_iam
+  onDeleteTrade(filter: ModelSubscriptionTradeFilterInput): Trade @aws_subscribe(mutations: ["deleteTrade"]) @aws_api_key @aws_iam
+}
+
+type ModelSignalConnection @aws_api_key @aws_iam {
+  items: [Signal]!
+  nextToken: String
+}
+
+input ModelSignalDirectionInput {
+  eq: SignalDirection
+  ne: SignalDirection
+}
+
+input ModelSignalFilterInput {
+  symbol: ModelStringInput
+  direction: ModelSignalDirectionInput
+  entry_min: ModelFloatInput
+  entry_max: ModelFloatInput
+  stop_loss: ModelFloatInput
+  take_profit_1: ModelFloatInput
+  max_risk_percent: ModelFloatInput
+  rationale: ModelStringInput
+  generated_at: ModelStringInput
+  ai_confidence: ModelIntInput
+  ai_comment: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelSignalFilterInput]
+  or: [ModelSignalFilterInput]
+  not: ModelSignalFilterInput
+}
+
+input ModelSignalConditionInput {
+  symbol: ModelStringInput
+  direction: ModelSignalDirectionInput
+  entry_min: ModelFloatInput
+  entry_max: ModelFloatInput
+  stop_loss: ModelFloatInput
+  take_profit_1: ModelFloatInput
+  max_risk_percent: ModelFloatInput
+  rationale: ModelStringInput
+  generated_at: ModelStringInput
+  ai_confidence: ModelIntInput
+  ai_comment: ModelStringInput
+  and: [ModelSignalConditionInput]
+  or: [ModelSignalConditionInput]
+  not: ModelSignalConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateSignalInput {
+  symbol: String!
+  direction: SignalDirection
+  entry_min: Float
+  entry_max: Float
+  stop_loss: Float
+  take_profit_1: Float
+  max_risk_percent: Float
+  rationale: AWSJSON
+  generated_at: AWSDateTime!
+  ai_confidence: Int
+  ai_comment: String
+  id: ID
+}
+
+input UpdateSignalInput {
+  symbol: String
+  direction: SignalDirection
+  entry_min: Float
+  entry_max: Float
+  stop_loss: Float
+  take_profit_1: Float
+  max_risk_percent: Float
+  rationale: AWSJSON
+  generated_at: AWSDateTime
+  ai_confidence: Int
+  ai_comment: String
+  id: ID!
+}
+
+input DeleteSignalInput {
+  id: ID!
+}
+
+input ModelSubscriptionSignalFilterInput {
+  symbol: ModelSubscriptionStringInput
+  direction: ModelSubscriptionStringInput
+  entry_min: ModelSubscriptionFloatInput
+  entry_max: ModelSubscriptionFloatInput
+  stop_loss: ModelSubscriptionFloatInput
+  take_profit_1: ModelSubscriptionFloatInput
+  max_risk_percent: ModelSubscriptionFloatInput
+  rationale: ModelSubscriptionStringInput
+  generated_at: ModelSubscriptionStringInput
+  ai_confidence: ModelSubscriptionIntInput
+  ai_comment: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionSignalFilterInput]
+  or: [ModelSubscriptionSignalFilterInput]
+}
+
+type ModelTradeConnection @aws_api_key @aws_iam {
+  items: [Trade]!
+  nextToken: String
+}
+
+input ModelTradeSideInput {
+  eq: TradeSide
+  ne: TradeSide
+}
+
+input ModelTradeFilterInput {
+  symbol: ModelStringInput
+  side: ModelTradeSideInput
+  entry_price: ModelFloatInput
+  exit_price: ModelFloatInput
+  quantity: ModelFloatInput
+  stop_loss: ModelFloatInput
+  take_profit: ModelFloatInput
+  realized_pnl: ModelFloatInput
+  realized_pnl_percent: ModelFloatInput
+  status: ModelStringInput
+  opened_at: ModelStringInput
+  closed_at: ModelStringInput
+  ai_analysis: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelTradeFilterInput]
+  or: [ModelTradeFilterInput]
+  not: ModelTradeFilterInput
+}
+
+input ModelTradeConditionInput {
+  symbol: ModelStringInput
+  side: ModelTradeSideInput
+  entry_price: ModelFloatInput
+  exit_price: ModelFloatInput
+  quantity: ModelFloatInput
+  stop_loss: ModelFloatInput
+  take_profit: ModelFloatInput
+  realized_pnl: ModelFloatInput
+  realized_pnl_percent: ModelFloatInput
+  status: ModelStringInput
+  opened_at: ModelStringInput
+  closed_at: ModelStringInput
+  ai_analysis: ModelStringInput
+  and: [ModelTradeConditionInput]
+  or: [ModelTradeConditionInput]
+  not: ModelTradeConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateTradeInput {
+  symbol: String!
+  side: TradeSide
+  entry_price: Float!
+  exit_price: Float
+  quantity: Float!
+  stop_loss: Float!
+  take_profit: Float!
+  realized_pnl: Float
+  realized_pnl_percent: Float
+  status: String!
+  opened_at: AWSDateTime!
+  closed_at: AWSDateTime
+  ai_analysis: String
+  id: ID
+}
+
+input UpdateTradeInput {
+  symbol: String
+  side: TradeSide
+  entry_price: Float
+  exit_price: Float
+  quantity: Float
+  stop_loss: Float
+  take_profit: Float
+  realized_pnl: Float
+  realized_pnl_percent: Float
+  status: String
+  opened_at: AWSDateTime
+  closed_at: AWSDateTime
+  ai_analysis: String
+  id: ID!
+}
+
+input DeleteTradeInput {
+  id: ID!
+}
+
+input ModelSubscriptionTradeFilterInput {
+  symbol: ModelSubscriptionStringInput
+  side: ModelSubscriptionStringInput
+  entry_price: ModelSubscriptionFloatInput
+  exit_price: ModelSubscriptionFloatInput
+  quantity: ModelSubscriptionFloatInput
+  stop_loss: ModelSubscriptionFloatInput
+  take_profit: ModelSubscriptionFloatInput
+  realized_pnl: ModelSubscriptionFloatInput
+  realized_pnl_percent: ModelSubscriptionFloatInput
+  status: ModelSubscriptionStringInput
+  opened_at: ModelSubscriptionStringInput
+  closed_at: ModelSubscriptionStringInput
+  ai_analysis: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionTradeFilterInput]
+  or: [ModelSubscriptionTradeFilterInput]
+}

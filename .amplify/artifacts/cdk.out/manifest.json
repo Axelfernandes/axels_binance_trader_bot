@@ -1,0 +1,2356 @@
+{
+  "version": "48.0.0",
+  "artifacts": {
+    "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "amplify:deployment-type": "sandbox",
+          "created-by": "amplify"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fa641f4382d594864512d14647181c703a3f4352d44a8654714ad6b33c3f96dd.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f.assets"
+      ],
+      "metadata": {
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/deploymentType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentType"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/region": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "region"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/GraphQLAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPI42A6FA33"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/GraphQLAPI/TransformerSchema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPITransformerSchemaFF50A789"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/GraphQLAPI/DefaultApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPIDefaultApiKey1C8ED374"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/GraphQLAPI/NONE_DS": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/GraphQLAPI/NONE_DS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPINONEDS684BF699"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/AmplifyManagedTableIsCompleteRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableIsCompleteRoleF825222C"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleB4E71DEA"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleDefaultPolicyF6DABCB6"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkonEvent1DFC2ECC"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-isComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkisComplete2E51021B"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRole470BE899"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRoleDefaultPolicy89F3836A"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachine060600BC"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager/amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent23B0890BArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent23B0890BArn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource86290833"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/AccountSnapshotTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/AccountSnapshotTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AccountSnapshotTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/CustomTableAccountSnapshotTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/GetAttAccountSnapshotTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttAccountSnapshotTableStreamArn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/GetAttAccountSnapshotTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttAccountSnapshotTableName"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/AccountSnapshotIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshotIAMRole"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/AccountSnapshotIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AccountSnapshotIAMRole7ECFFC3C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshotIAMRole"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/AccountSnapshotDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshotTable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/AccountSnapshotDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AccountSnapshotDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AccountSnapshotTable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/QuerygetAccountSnapshotauth0Function/QuerygetAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetAccountSnapshotauth0FunctionQuerygetAccountSnapshotauth0FunctionAppSyncFunctionA003E601"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/QuerygetAccountSnapshotpostAuth0Function/QuerygetAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetAccountSnapshotpostAuth0FunctionQuerygetAccountSnapshotpostAuth0FunctionAppSyncFunction4731514F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/QueryGetAccountSnapshotDataResolverFn/QueryGetAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetAccountSnapshotDataResolverFnQueryGetAccountSnapshotDataResolverFnAppSyncFunction56C2147E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/queryGetAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/QuerylistAccountSnapshotsauth0Function/QuerylistAccountSnapshotsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistAccountSnapshotsauth0FunctionQuerylistAccountSnapshotsauth0FunctionAppSyncFunctionDE610975"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistAccountSnapshotsauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/QuerylistAccountSnapshotspostAuth0Function/QuerylistAccountSnapshotspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistAccountSnapshotspostAuth0FunctionQuerylistAccountSnapshotspostAuth0FunctionAppSyncFunctionD5636AA6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistAccountSnapshotspostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/QueryListAccountSnapshotsDataResolverFn/QueryListAccountSnapshotsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListAccountSnapshotsDataResolverFnQueryListAccountSnapshotsDataResolverFnAppSyncFunction91116E50"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListAccountSnapshotsDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/queryListAccountSnapshotsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listAccountSnapshots"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationcreateAccountSnapshotinit0Function/MutationcreateAccountSnapshotinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateAccountSnapshotinit0FunctionMutationcreateAccountSnapshotinit0FunctionAppSyncFunctionE04EDA99"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateAccountSnapshotinit0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationcreateAccountSnapshotauth0Function/MutationcreateAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateAccountSnapshotauth0FunctionMutationcreateAccountSnapshotauth0FunctionAppSyncFunctionA6F3F823"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationcreateAccountSnapshotpostAuth0Function/MutationcreateAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateAccountSnapshotpostAuth0FunctionMutationcreateAccountSnapshotpostAuth0FunctionAppSyncFunction237EE2F9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationCreateAccountSnapshotDataResolverFn/MutationCreateAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateAccountSnapshotDataResolverFnMutationCreateAccountSnapshotDataResolverFnAppSyncFunction8FE73356"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/mutationCreateAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationupdateAccountSnapshotinit0Function/MutationupdateAccountSnapshotinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateAccountSnapshotinit0FunctionMutationupdateAccountSnapshotinit0FunctionAppSyncFunction7B26C95E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateAccountSnapshotinit0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationupdateAccountSnapshotauth0Function/MutationupdateAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateAccountSnapshotauth0FunctionMutationupdateAccountSnapshotauth0FunctionAppSyncFunction51510258"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationupdateAccountSnapshotpostAuth0Function/MutationupdateAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateAccountSnapshotpostAuth0FunctionMutationupdateAccountSnapshotpostAuth0FunctionAppSyncFunction9CFBEE35"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationUpdateAccountSnapshotDataResolverFn/MutationUpdateAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateAccountSnapshotDataResolverFnMutationUpdateAccountSnapshotDataResolverFnAppSyncFunction0C1F7725"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/mutationUpdateAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationdeleteAccountSnapshotauth0Function/MutationdeleteAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteAccountSnapshotauth0FunctionMutationdeleteAccountSnapshotauth0FunctionAppSyncFunction9F8E3D11"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationdeleteAccountSnapshotpostAuth0Function/MutationdeleteAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteAccountSnapshotpostAuth0FunctionMutationdeleteAccountSnapshotpostAuth0FunctionAppSyncFunctionF3432E94"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/MutationDeleteAccountSnapshotDataResolverFn/MutationDeleteAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteAccountSnapshotDataResolverFnMutationDeleteAccountSnapshotDataResolverFnAppSyncFunctionFD1206E9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/mutationDeleteAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptiononCreateAccountSnapshotauth0Function/SubscriptiononCreateAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateAccountSnapshotauth0FunctionSubscriptiononCreateAccountSnapshotauth0FunctionAppSyncFunctionC7F9FA4D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptiononCreateAccountSnapshotpostAuth0Function/SubscriptiononCreateAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateAccountSnapshotpostAuth0FunctionSubscriptiononCreateAccountSnapshotpostAuth0FunctionAppSyncFunctionF56123F2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptionOnCreateAccountSnapshotDataResolverFn/SubscriptionOnCreateAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateAccountSnapshotDataResolverFnSubscriptionOnCreateAccountSnapshotDataResolverFnAppSyncFunction6193EF98"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/subscriptionOnCreateAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptiononUpdateAccountSnapshotauth0Function/SubscriptiononUpdateAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateAccountSnapshotauth0FunctionSubscriptiononUpdateAccountSnapshotauth0FunctionAppSyncFunctionCD8CB591"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptiononUpdateAccountSnapshotpostAuth0Function/SubscriptiononUpdateAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateAccountSnapshotpostAuth0FunctionSubscriptiononUpdateAccountSnapshotpostAuth0FunctionAppSyncFunction2D6B284D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptionOnUpdateAccountSnapshotDataResolverFn/SubscriptionOnUpdateAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateAccountSnapshotDataResolverFnSubscriptionOnUpdateAccountSnapshotDataResolverFnAppSyncFunction2260A8D1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/subscriptionOnUpdateAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptiononDeleteAccountSnapshotauth0Function/SubscriptiononDeleteAccountSnapshotauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteAccountSnapshotauth0FunctionSubscriptiononDeleteAccountSnapshotauth0FunctionAppSyncFunction4F00558F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteAccountSnapshotauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptiononDeleteAccountSnapshotpostAuth0Function/SubscriptiononDeleteAccountSnapshotpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteAccountSnapshotpostAuth0FunctionSubscriptiononDeleteAccountSnapshotpostAuth0FunctionAppSyncFunction1A786C9E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteAccountSnapshotpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/SubscriptionOnDeleteAccountSnapshotDataResolverFn/SubscriptionOnDeleteAccountSnapshotDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteAccountSnapshotDataResolverFnSubscriptionOnDeleteAccountSnapshotDataResolverFnAppSyncFunctionB1622D12"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteAccountSnapshotDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/subscriptionOnDeleteAccountSnapshotResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteAccountSnapshotResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteAccountSnapshot"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputs.amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent23B0890BArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputsamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyT2B4AA439"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AccountSnapshot.NestedStack/AccountSnapshot.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAccountSnapshotNestedStackAccountSnapshotNestedStackResource6130C9A1"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SignalTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Signal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SignalTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SignalTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Signal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/CustomTableSignalTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Signal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/GetAttSignalTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttSignalTableStreamArn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/GetAttSignalTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttSignalTableName"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SignalIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SignalIAMRole"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SignalIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SignalIAMRole1DB22217"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SignalIAMRole"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SignalDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SignalTable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SignalDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SignalDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SignalTable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/QuerygetSignalauth0Function/QuerygetSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetSignalauth0FunctionQuerygetSignalauth0FunctionAppSyncFunction5C0BCE60"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/QuerygetSignalpostAuth0Function/QuerygetSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetSignalpostAuth0FunctionQuerygetSignalpostAuth0FunctionAppSyncFunctionF7F73930"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/QueryGetSignalDataResolverFn/QueryGetSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetSignalDataResolverFnQueryGetSignalDataResolverFnAppSyncFunction447A049B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/queryGetSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/QuerylistSignalsauth0Function/QuerylistSignalsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistSignalsauth0FunctionQuerylistSignalsauth0FunctionAppSyncFunctionBB0CEC12"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistSignalsauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/QuerylistSignalspostAuth0Function/QuerylistSignalspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistSignalspostAuth0FunctionQuerylistSignalspostAuth0FunctionAppSyncFunction9CCBAC4A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistSignalspostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/QueryListSignalsDataResolverFn/QueryListSignalsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListSignalsDataResolverFnQueryListSignalsDataResolverFnAppSyncFunction01D20A4C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListSignalsDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/queryListSignalsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listSignals"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationcreateSignalinit0Function/MutationcreateSignalinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateSignalinit0FunctionMutationcreateSignalinit0FunctionAppSyncFunction325CFB98"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateSignalinit0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationcreateSignalauth0Function/MutationcreateSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateSignalauth0FunctionMutationcreateSignalauth0FunctionAppSyncFunction05D60FBF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationcreateSignalpostAuth0Function/MutationcreateSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateSignalpostAuth0FunctionMutationcreateSignalpostAuth0FunctionAppSyncFunctionB3AC0012"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationCreateSignalDataResolverFn/MutationCreateSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateSignalDataResolverFnMutationCreateSignalDataResolverFnAppSyncFunction21F5156E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/mutationCreateSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationupdateSignalinit0Function/MutationupdateSignalinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateSignalinit0FunctionMutationupdateSignalinit0FunctionAppSyncFunctionAD3E74DA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateSignalinit0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationupdateSignalauth0Function/MutationupdateSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateSignalauth0FunctionMutationupdateSignalauth0FunctionAppSyncFunctionF82AB3F4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationupdateSignalpostAuth0Function/MutationupdateSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateSignalpostAuth0FunctionMutationupdateSignalpostAuth0FunctionAppSyncFunction32160C0A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationUpdateSignalDataResolverFn/MutationUpdateSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateSignalDataResolverFnMutationUpdateSignalDataResolverFnAppSyncFunction2CB73F39"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/mutationUpdateSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationdeleteSignalauth0Function/MutationdeleteSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteSignalauth0FunctionMutationdeleteSignalauth0FunctionAppSyncFunction4AFEF687"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationdeleteSignalpostAuth0Function/MutationdeleteSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteSignalpostAuth0FunctionMutationdeleteSignalpostAuth0FunctionAppSyncFunction637ADBF9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/MutationDeleteSignalDataResolverFn/MutationDeleteSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteSignalDataResolverFnMutationDeleteSignalDataResolverFnAppSyncFunction8CB9C123"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/mutationDeleteSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptiononCreateSignalauth0Function/SubscriptiononCreateSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateSignalauth0FunctionSubscriptiononCreateSignalauth0FunctionAppSyncFunction0C045774"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptiononCreateSignalpostAuth0Function/SubscriptiononCreateSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateSignalpostAuth0FunctionSubscriptiononCreateSignalpostAuth0FunctionAppSyncFunction46E614F9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptionOnCreateSignalDataResolverFn/SubscriptionOnCreateSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateSignalDataResolverFnSubscriptionOnCreateSignalDataResolverFnAppSyncFunction8A769DCC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/subscriptionOnCreateSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptiononUpdateSignalauth0Function/SubscriptiononUpdateSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateSignalauth0FunctionSubscriptiononUpdateSignalauth0FunctionAppSyncFunction794A67BD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptiononUpdateSignalpostAuth0Function/SubscriptiononUpdateSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateSignalpostAuth0FunctionSubscriptiononUpdateSignalpostAuth0FunctionAppSyncFunction9AF65A53"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptionOnUpdateSignalDataResolverFn/SubscriptionOnUpdateSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateSignalDataResolverFnSubscriptionOnUpdateSignalDataResolverFnAppSyncFunction9B1B756D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/subscriptionOnUpdateSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptiononDeleteSignalauth0Function/SubscriptiononDeleteSignalauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteSignalauth0FunctionSubscriptiononDeleteSignalauth0FunctionAppSyncFunction8B76D9CB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteSignalauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptiononDeleteSignalpostAuth0Function/SubscriptiononDeleteSignalpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteSignalpostAuth0FunctionSubscriptiononDeleteSignalpostAuth0FunctionAppSyncFunction698F4DAA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteSignalpostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/SubscriptionOnDeleteSignalDataResolverFn/SubscriptionOnDeleteSignalDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteSignalDataResolverFnSubscriptionOnDeleteSignalDataResolverFnAppSyncFunction0CE16142"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteSignalDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/subscriptionOnDeleteSignalResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteSignalResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteSignal"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputs.amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent23B0890BArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputsamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyT2B4AA439"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Signal.NestedStack/Signal.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataSignalNestedStackSignalNestedStackResource60A70C0F"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Trade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TradeTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Trade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/CustomTableTradeTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Trade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/GetAttTradeTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttTradeTableStreamArn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/GetAttTradeTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttTradeTableName"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TradeIAMRole"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TradeIAMRole3976C5AC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TradeIAMRole"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TradeTable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TradeDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TradeTable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerygetTradeauth0Function/QuerygetTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTradeauth0FunctionQuerygetTradeauth0FunctionAppSyncFunctionB9913595"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerygetTradepostAuth0Function/QuerygetTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTradepostAuth0FunctionQuerygetTradepostAuth0FunctionAppSyncFunction925884AA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QueryGetTradeDataResolverFn/QueryGetTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetTradeDataResolverFnQueryGetTradeDataResolverFnAppSyncFunctionDE351B6B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/queryGetTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerylistTradesauth0Function/QuerylistTradesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTradesauth0FunctionQuerylistTradesauth0FunctionAppSyncFunction48E559AE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTradesauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerylistTradespostAuth0Function/QuerylistTradespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTradespostAuth0FunctionQuerylistTradespostAuth0FunctionAppSyncFunction85F4AF11"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTradespostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QueryListTradesDataResolverFn/QueryListTradesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListTradesDataResolverFnQueryListTradesDataResolverFnAppSyncFunctionFF5AE17E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListTradesDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/queryListTradesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listTrades"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationcreateTradeinit0Function/MutationcreateTradeinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTradeinit0FunctionMutationcreateTradeinit0FunctionAppSyncFunction156B1470"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTradeinit0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationcreateTradeauth0Function/MutationcreateTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTradeauth0FunctionMutationcreateTradeauth0FunctionAppSyncFunction9B966856"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationcreateTradepostAuth0Function/MutationcreateTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTradepostAuth0FunctionMutationcreateTradepostAuth0FunctionAppSyncFunction143935A9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationCreateTradeDataResolverFn/MutationCreateTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateTradeDataResolverFnMutationCreateTradeDataResolverFnAppSyncFunction6F23EF98"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/mutationCreateTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationupdateTradeinit0Function/MutationupdateTradeinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTradeinit0FunctionMutationupdateTradeinit0FunctionAppSyncFunctionAAB7DC8F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTradeinit0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationupdateTradeauth0Function/MutationupdateTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTradeauth0FunctionMutationupdateTradeauth0FunctionAppSyncFunctionF42C99DC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationupdateTradepostAuth0Function/MutationupdateTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTradepostAuth0FunctionMutationupdateTradepostAuth0FunctionAppSyncFunction3DD88CEA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationUpdateTradeDataResolverFn/MutationUpdateTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateTradeDataResolverFnMutationUpdateTradeDataResolverFnAppSyncFunctionC15D27FE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/mutationUpdateTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationdeleteTradeauth0Function/MutationdeleteTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTradeauth0FunctionMutationdeleteTradeauth0FunctionAppSyncFunction46D6D5CE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationdeleteTradepostAuth0Function/MutationdeleteTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTradepostAuth0FunctionMutationdeleteTradepostAuth0FunctionAppSyncFunctionF129B855"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationDeleteTradeDataResolverFn/MutationDeleteTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteTradeDataResolverFnMutationDeleteTradeDataResolverFnAppSyncFunctionE7F2467A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/mutationDeleteTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononCreateTradeauth0Function/SubscriptiononCreateTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTradeauth0FunctionSubscriptiononCreateTradeauth0FunctionAppSyncFunction313B154F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononCreateTradepostAuth0Function/SubscriptiononCreateTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTradepostAuth0FunctionSubscriptiononCreateTradepostAuth0FunctionAppSyncFunctionBF44AA65"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptionOnCreateTradeDataResolverFn/SubscriptionOnCreateTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateTradeDataResolverFnSubscriptionOnCreateTradeDataResolverFnAppSyncFunctionBB222370"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/subscriptionOnCreateTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononUpdateTradeauth0Function/SubscriptiononUpdateTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTradeauth0FunctionSubscriptiononUpdateTradeauth0FunctionAppSyncFunction9AB3C0DF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononUpdateTradepostAuth0Function/SubscriptiononUpdateTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTradepostAuth0FunctionSubscriptiononUpdateTradepostAuth0FunctionAppSyncFunctionE682F49A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptionOnUpdateTradeDataResolverFn/SubscriptionOnUpdateTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateTradeDataResolverFnSubscriptionOnUpdateTradeDataResolverFnAppSyncFunction2CF8E25A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/subscriptionOnUpdateTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononDeleteTradeauth0Function/SubscriptiononDeleteTradeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTradeauth0FunctionSubscriptiononDeleteTradeauth0FunctionAppSyncFunction8D0DDA0E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteTradeauth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononDeleteTradepostAuth0Function/SubscriptiononDeleteTradepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTradepostAuth0FunctionSubscriptiononDeleteTradepostAuth0FunctionAppSyncFunction604FA369"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteTradepostAuth0Function"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptionOnDeleteTradeDataResolverFn/SubscriptionOnDeleteTradeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteTradeDataResolverFnSubscriptionOnDeleteTradeDataResolverFnAppSyncFunction76A1686A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteTradeDataResolverFn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/subscriptionOnDeleteTradeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTradeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteTrade"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputs.amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent23B0890BArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputsamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyT2B4AA439"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/reference-to-amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade.NestedStack/Trade.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataTradeNestedStackTradeNestedStackResourceBB6166E5"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucket9CCB4ACA"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketPolicyF1C1C548"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketAutoDeleteObjectsCustomResource437F26F5"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentAwsCliLayerE322F905"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB21775929"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleA41FC8C2"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleDefaultPolicyFF1C635B"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBC5D8AB21"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/modelIntrospectionSchemaBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketF566B665"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/modelIntrospectionSchemaBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketPolicy4DAB0D15"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/modelIntrospectionSchemaBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketAutoDeleteObjectsCustomResourceFE57309F"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/modelIntrospectionSchemaBucketDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentAwsCliLayer13C432F7"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/AMPLIFY_DATA_GRAPHQL_ENDPOINTParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAGRAPHQLENDPOINTParameter1C2CBB16"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMABUCKETNAMEParameter47BF4F44"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEYParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMAKEYParameterB6AEAE8A"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/AMPLIFY_DATA_DEFAULT_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATADEFAULTNAMEParameterE7C23CC4"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99GraphQLUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99GraphQLUrl"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB513FF33DDestinationBucketArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB513FF33DDestinationBucketArn"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIDefaultApiKeyEA1A3A63ApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIDefaultApiKeyEA1A3A63ApiKey"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data.NestedStack/data.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "data7552DF31"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/awsAppsyncApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiId"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/awsAppsyncApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiEndpoint"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/awsAppsyncAuthenticationType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAuthenticationType"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/awsAppsyncRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncRegion"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/amplifyApiModelSchemaS3Uri": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyApiModelSchemaS3Uri"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/awsAppsyncApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiKey"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/awsAppsyncAdditionalAuthenticationTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAdditionalAuthenticationTypes"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "aws-cdk-lib/feature-flag-report": {
+      "type": "cdk:feature-flag-report",
+      "properties": {
+        "module": "aws-cdk-lib",
+        "flags": {
+          "@aws-cdk/aws-signer:signingProfileNamePassedToCfn": {
+            "recommendedValue": true,
+            "explanation": "Pass signingProfileName to CfnSigningProfile"
+          },
+          "@aws-cdk/core:newStyleStackSynthesis": {
+            "recommendedValue": true,
+            "explanation": "Switch to new stack synthesis method which enables CI/CD",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:stackRelativeExports": {
+            "recommendedValue": true,
+            "explanation": "Name exports based on the construct paths relative to the stack, rather than the global construct path",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:secGroupsDisablesImplicitOpenListener": {
+            "recommendedValue": true,
+            "explanation": "Disable implicit openListener when custom security groups are provided"
+          },
+          "@aws-cdk/aws-rds:lowercaseDbIdentifier": {
+            "recommendedValue": true,
+            "explanation": "Force lowercasing of RDS Cluster names in CDK",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": {
+            "recommendedValue": true,
+            "explanation": "Allow adding/removing multiple UsagePlanKeys independently",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeVersionProps": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the  `fn.currentVersion`.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeLayerVersion": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the `fn.currentVersion`."
+          },
+          "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have cloudfront distributions use the security policy TLSv1.2_2021 by default.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:checkSecretUsage": {
+            "recommendedValue": true,
+            "explanation": "Enable this flag to make it impossible to accidentally use SecretValues in unsafe locations"
+          },
+          "@aws-cdk/core:target-partitions": {
+            "recommendedValue": [
+              "aws",
+              "aws-cn"
+            ],
+            "explanation": "What regions to include in lookup tables of environment agnostic stacks"
+          },
+          "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": {
+            "recommendedValue": true,
+            "explanation": "ECS extensions will automatically add an `awslogs` driver if no logging is specified"
+          },
+          "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have Launch Templates generated by the `InstanceRequireImdsv2Aspect` use unique names."
+          },
+          "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": {
+            "recommendedValue": true,
+            "explanation": "ARN format used by ECS. In the new ARN format, the cluster name is part of the resource ID."
+          },
+          "@aws-cdk/aws-iam:minimizePolicies": {
+            "recommendedValue": true,
+            "explanation": "Minimize IAM policies by combining Statements"
+          },
+          "@aws-cdk/core:validateSnapshotRemovalPolicy": {
+            "recommendedValue": true,
+            "explanation": "Error on snapshot removal policies on resources that do not support it."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": {
+            "recommendedValue": true,
+            "explanation": "Generate key aliases that include the stack name"
+          },
+          "@aws-cdk/aws-s3:createDefaultLoggingPolicy": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to create an S3 bucket policy by default in cases where an AWS service would automatically create the Policy if one does not exist."
+          },
+          "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": {
+            "recommendedValue": true,
+            "explanation": "Restrict KMS key policy for encrypted Queues a bit more"
+          },
+          "@aws-cdk/aws-apigateway:disableCloudWatchRole": {
+            "recommendedValue": true,
+            "explanation": "Make default CloudWatch Role behavior safe for multiple API Gateways in one environment"
+          },
+          "@aws-cdk/core:enablePartitionLiterals": {
+            "recommendedValue": true,
+            "explanation": "Make ARNs concrete if AWS partition is known"
+          },
+          "@aws-cdk/aws-events:eventsTargetQueueSameAccount": {
+            "recommendedValue": true,
+            "explanation": "Event Rules may only push to encrypted SQS queues in the same account"
+          },
+          "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": {
+            "recommendedValue": true,
+            "explanation": "Avoid setting the \"ECS\" deployment controller when adding a circuit breaker"
+          },
+          "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature to create default policy names for imported roles that depend on the stack the role is in."
+          },
+          "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": {
+            "recommendedValue": true,
+            "explanation": "Use S3 Bucket Policy instead of ACLs for Server Access Logging"
+          },
+          "@aws-cdk/aws-route53-patters:useCertificate": {
+            "recommendedValue": true,
+            "explanation": "Use the official `Certificate` resource instead of `DnsValidatedCertificate`"
+          },
+          "@aws-cdk/customresources:installLatestAwsSdkDefault": {
+            "recommendedValue": false,
+            "explanation": "Whether to install the latest SDK by default in AwsCustomResource"
+          },
+          "@aws-cdk/aws-rds:databaseProxyUniqueResourceName": {
+            "recommendedValue": true,
+            "explanation": "Use unique resource name for Database Proxy"
+          },
+          "@aws-cdk/aws-codedeploy:removeAlarmsFromDeploymentGroup": {
+            "recommendedValue": true,
+            "explanation": "Remove CloudWatch alarms from deployment group"
+          },
+          "@aws-cdk/aws-apigateway:authorizerChangeDeploymentLogicalId": {
+            "recommendedValue": true,
+            "explanation": "Include authorizer configuration in the calculation of the API deployment logical ID."
+          },
+          "@aws-cdk/aws-ec2:launchTemplateDefaultUserData": {
+            "recommendedValue": true,
+            "explanation": "Define user data for a launch template by default when a machine image is provided."
+          },
+          "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": {
+            "recommendedValue": true,
+            "explanation": "SecretTargetAttachments uses the ResourcePolicy of the attached Secret."
+          },
+          "@aws-cdk/aws-redshift:columnId": {
+            "recommendedValue": true,
+            "explanation": "Whether to use an ID to track Redshift column changes"
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:enableEmrServicePolicyV2": {
+            "recommendedValue": true,
+            "explanation": "Enable AmazonEMRServicePolicy_v2 managed policies"
+          },
+          "@aws-cdk/aws-ec2:restrictDefaultSecurityGroup": {
+            "recommendedValue": true,
+            "explanation": "Restrict access to the VPC default security group"
+          },
+          "@aws-cdk/aws-apigateway:requestValidatorUniqueId": {
+            "recommendedValue": true,
+            "explanation": "Generate a unique id for each RequestValidator added to a method"
+          },
+          "@aws-cdk/aws-kms:aliasNameRef": {
+            "recommendedValue": true,
+            "explanation": "KMS Alias name and keyArn will have implicit reference to KMS Key"
+          },
+          "@aws-cdk/aws-kms:applyImportedAliasPermissionsToPrincipal": {
+            "recommendedValue": true,
+            "explanation": "Enable grant methods on Aliases imported by name to use kms:ResourceAliases condition"
+          },
+          "@aws-cdk/aws-autoscaling:generateLaunchTemplateInsteadOfLaunchConfig": {
+            "recommendedValue": true,
+            "explanation": "Generate a launch template when creating an AutoScalingGroup"
+          },
+          "@aws-cdk/core:includePrefixInUniqueNameGeneration": {
+            "recommendedValue": true,
+            "explanation": "Include the stack prefix in the stack name generation process"
+          },
+          "@aws-cdk/aws-efs:denyAnonymousAccess": {
+            "recommendedValue": true,
+            "explanation": "EFS denies anonymous clients accesses"
+          },
+          "@aws-cdk/aws-opensearchservice:enableOpensearchMultiAzWithStandby": {
+            "recommendedValue": true,
+            "explanation": "Enables support for Multi-AZ with Standby deployment for opensearch domains"
+          },
+          "@aws-cdk/aws-lambda-nodejs:useLatestRuntimeVersion": {
+            "recommendedValue": true,
+            "explanation": "Enables aws-lambda-nodejs.Function to use the latest available NodeJs runtime as the default"
+          },
+          "@aws-cdk/aws-efs:mountTargetOrderInsensitiveLogicalId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, mount targets will have a stable logicalId that is linked to the associated subnet."
+          },
+          "@aws-cdk/aws-rds:auroraClusterChangeScopeOfInstanceParameterGroupWithEachParameters": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a scope of InstanceParameterGroup for AuroraClusterInstance with each parameters will change."
+          },
+          "@aws-cdk/aws-appsync:useArnForSourceApiAssociationIdentifier": {
+            "recommendedValue": true,
+            "explanation": "When enabled, will always use the arn for identifiers for CfnSourceApiAssociation in the GraphqlApi construct rather than id."
+          },
+          "@aws-cdk/aws-rds:preventRenderingDeprecatedCredentials": {
+            "recommendedValue": true,
+            "explanation": "When enabled, creating an RDS database cluster from a snapshot will only render credentials for snapshot credentials."
+          },
+          "@aws-cdk/aws-codepipeline-actions:useNewDefaultBranchForCodeCommitSource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the CodeCommit source action is using the default branch name 'main'."
+          },
+          "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the logical ID of a Lambda permission for a Lambda action includes an alarm ID."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default value for crossAccountKeys to false."
+          },
+          "@aws-cdk/aws-codepipeline:defaultPipelineTypeToV2": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default pipeline type to V2."
+          },
+          "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, IAM Policy created from KMS key grant will reduce the resource scope to this key only."
+          },
+          "@aws-cdk/pipelines:reduceAssetRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from PipelineAssetsFileRole trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-eks:nodegroupNameAttribute": {
+            "recommendedValue": true,
+            "explanation": "When enabled, nodegroupName attribute of the provisioned EKS NodeGroup will not have the cluster name prefix."
+          },
+          "@aws-cdk/aws-eks:useNativeOidcProvider": {
+            "recommendedValue": true,
+            "explanation": "When enabled, EKS V2 clusters will use the native OIDC provider resource AWS::IAM::OIDCProvider instead of creating the OIDCProvider with a custom resource (iam.OpenIDConnectProvider)."
+          },
+          "@aws-cdk/aws-ec2:ebsDefaultGp3Volume": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default volume type of the EBS volume will be GP3"
+          },
+          "@aws-cdk/aws-ecs:removeDefaultDeploymentAlarm": {
+            "recommendedValue": true,
+            "explanation": "When enabled, remove default deployment alarm settings"
+          },
+          "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": {
+            "recommendedValue": false,
+            "explanation": "When enabled, the custom resource used for `AwsCustomResource` will configure the `logApiResponseData` property as true by default"
+          },
+          "@aws-cdk/aws-s3:keepNotificationInImportedBucket": {
+            "recommendedValue": false,
+            "explanation": "When enabled, Adding notifications to a bucket in the current stack will not remove notification from imported stack."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:useNewS3UriParametersForBedrockInvokeModelTask": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use new props for S3 URI field in task definition of state machine for bedrock invoke model.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:explicitStackTags": {
+            "recommendedValue": true,
+            "explanation": "When enabled, stack tags need to be assigned explicitly on a Stack."
+          },
+          "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": {
+            "recommendedValue": true,
+            "explanation": "When enabled, we will only grant the necessary permissions when users specify cloudwatch log group through logConfiguration"
+          },
+          "@aws-cdk/aws-dynamodb:resourcePolicyPerReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled will allow you to specify a resource policy per replica, and not copy the source table policy to all replicas"
+          },
+          "@aws-cdk/aws-ec2:ec2SumTImeoutEnabled": {
+            "recommendedValue": true,
+            "explanation": "When enabled, initOptions.timeout and resourceSignalTimeout values will be summed together."
+          },
+          "@aws-cdk/aws-appsync:appSyncGraphQLAPIScopeLambdaPermission": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a Lambda authorizer Permission created when using GraphqlApi will be properly scoped with a SourceArn."
+          },
+          "@aws-cdk/aws-rds:setCorrectValueForDatabaseInstanceReadReplicaInstanceResourceId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the value of property `instanceResourceId` in construct `DatabaseInstanceReadReplica` will be set to the correct value which is `DbiResourceId` instead of currently `DbInstanceArn`"
+          },
+          "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CFN templates added with `cfn-include` will error if the template contains Resource Update or Create policies with CFN Intrinsics that include non-primitive values."
+          },
+          "@aws-cdk/aws-lambda-nodejs:sdkV3ExcludeSmithyPackages": {
+            "recommendedValue": true,
+            "explanation": "When enabled, both `@aws-sdk` and `@smithy` packages will be excluded from the Lambda Node.js 18.x runtime to prevent version mismatches in bundled applications."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:fixRunEcsTaskPolicy": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resource of IAM Run Ecs policy generated by SFN EcsRunTask will reference the definition, instead of constructing ARN."
+          },
+          "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the BastionHost construct will use the latest Amazon Linux 2023 AMI, instead of Amazon Linux 2."
+          },
+          "@aws-cdk/core:aspectStabilization": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a stabilization loop will be run when invoking Aspects during synthesis.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-route53-targets:userPoolDomainNameMethodWithoutCustomResource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use a new method for DNS Name of user pool domain target without creating a custom resource."
+          },
+          "@aws-cdk/aws-elasticloadbalancingV2:albDualstackWithoutPublicIpv4SecurityGroupRulesDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default security group ingress rules will allow IPv6 ingress from anywhere"
+          },
+          "@aws-cdk/aws-iam:oidcRejectUnauthorizedConnections": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default behaviour of OIDC provider will reject unauthorized connections"
+          },
+          "@aws-cdk/core:enableAdditionalMetadataCollection": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will expand the scope of usage data collected to better inform CDK development and improve communication for security concerns and emerging issues."
+          },
+          "@aws-cdk/aws-lambda:createNewPoliciesWithAddToRolePolicy": {
+            "recommendedValue": false,
+            "explanation": "[Deprecated] When enabled, Lambda will create new inline policies with AddToRolePolicy instead of adding to the Default Policy Statement"
+          },
+          "@aws-cdk/aws-s3:setUniqueReplicationRoleName": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will automatically generate a unique role name that is used for s3 object replication."
+          },
+          "@aws-cdk/pipelines:reduceStageRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from Stage addActions trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-events:requireEventBusPolicySid": {
+            "recommendedValue": true,
+            "explanation": "When enabled, grantPutEventsTo() will use resource policies with Statement IDs for service principals."
+          },
+          "@aws-cdk/core:aspectPrioritiesMutating": {
+            "recommendedValue": true,
+            "explanation": "When set to true, Aspects added by the construct library on your behalf will be given a priority of MUTATING."
+          },
+          "@aws-cdk/aws-dynamodb:retainTableReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled, table replica will be default to the removal policy of source table unless specified otherwise."
+          },
+          "@aws-cdk/cognito:logUserPoolClientSecretValue": {
+            "recommendedValue": false,
+            "explanation": "When disabled, the value of the user pool client secret will not be logged in the custom resource lambda function logs."
+          },
+          "@aws-cdk/pipelines:reduceCrossAccountActionRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, scopes down the trust policy for the cross-account action role",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-stepfunctions:useDistributedMapResultWriterV2": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resultWriterV2 property of DistributedMap will be used insted of resultWriter"
+          },
+          "@aws-cdk/s3-notifications:addS3TrustKeyPolicyForSnsSubscriptions": {
+            "recommendedValue": true,
+            "explanation": "Add an S3 trust policy to a KMS key resource policy for SNS subscriptions."
+          },
+          "@aws-cdk/aws-ec2:requirePrivateSubnetsForEgressOnlyInternetGateway": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the EgressOnlyGateway resource is only created if private subnets are defined in the dual-stack VPC."
+          },
+          "@aws-cdk/aws-ec2-alpha:useResourceIdForVpcV2Migration": {
+            "recommendedValue": false,
+            "explanation": "When enabled, use resource IDs for VPC V2 migration"
+          },
+          "@aws-cdk/aws-s3:publicAccessBlockedByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, setting any combination of options for BlockPublicAccess will automatically set true for any options not defined."
+          },
+          "@aws-cdk/aws-lambda:useCdkManagedLogGroup": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK creates and manages loggroup for the lambda function"
+          },
+          "@aws-cdk/aws-elasticloadbalancingv2:networkLoadBalancerWithSecurityGroupByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, Network Load Balancer will be created with a security group by default."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:httpInvokeDynamicJsonPathEndpoint": {
+            "recommendedValue": true,
+            "explanation": "When enabled, allows using a dynamic apiEndpoint with JSONPath format in HttpInvoke tasks.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:uniqueTargetGroupId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, ECS patterns will generate unique target group IDs to prevent conflicts during load balancer replacement"
+          },
+          "@aws-cdk/aws-route53-patterns:useDistribution": {
+            "recommendedValue": true,
+            "explanation": "Use the `Distribution` resource instead of `CloudFrontWebDistribution`"
+          }
+        }
+      }
+    }
+  },
+  "minimumCliVersion": "2.1033.0"
+}

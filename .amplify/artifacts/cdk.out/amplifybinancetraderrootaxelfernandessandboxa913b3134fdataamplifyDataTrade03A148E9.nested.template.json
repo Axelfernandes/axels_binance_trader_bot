@@ -1,0 +1,1847 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputsamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyT2B4AA439": {
+   "Type": "String"
+  },
+  "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "TradeTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC9E097FCOutputsamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataAmplifyT2B4AA439"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "Trade-",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeTable/Default/Default"
+   }
+  },
+  "TradeIAMRole3976C5AC": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Trade-",
+                {
+                 "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Trade-",
+                {
+                 "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "TradeIAMRolee675b3-",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeIAMRole/Resource"
+   }
+  },
+  "TradeDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "TradeTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "TradeTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "TradeIAMRole3976C5AC",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "TradeIAMRole3976C5AC"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/TradeDataSource/Resource"
+   }
+  },
+  "QuerygetTradeauth0FunctionQuerygetTradeauth0FunctionAppSyncFunctionB9913595": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/74c1522efb7733193e4d75cee5b96595110452c456623a36d786f743aea94e7c.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerygetTradeauth0Function/QuerygetTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetTradepostAuth0FunctionQuerygetTradepostAuth0FunctionAppSyncFunction925884AA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerygetTradepostAuth0Function/QuerygetTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetTradeDataResolverFnQueryGetTradeDataResolverFnAppSyncFunctionDE351B6B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QueryGetTradeDataResolverFn/QueryGetTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "getTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetTradeauth0FunctionQuerygetTradeauth0FunctionAppSyncFunctionB9913595",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetTradepostAuth0FunctionQuerygetTradepostAuth0FunctionAppSyncFunction925884AA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetTradeDataResolverFnQueryGetTradeDataResolverFnAppSyncFunctionDE351B6B",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TradeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/queryGetTradeResolver"
+   }
+  },
+  "QuerylistTradesauth0FunctionQuerylistTradesauth0FunctionAppSyncFunction48E559AE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistTradesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/74c1522efb7733193e4d75cee5b96595110452c456623a36d786f743aea94e7c.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerylistTradesauth0Function/QuerylistTradesauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistTradespostAuth0FunctionQuerylistTradespostAuth0FunctionAppSyncFunction85F4AF11": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistTradespostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QuerylistTradespostAuth0Function/QuerylistTradespostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListTradesDataResolverFnQueryListTradesDataResolverFnAppSyncFunctionFF5AE17E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListTradesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/QueryListTradesDataResolverFn/QueryListTradesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "listTrades",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistTradesauth0FunctionQuerylistTradesauth0FunctionAppSyncFunction48E559AE",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistTradespostAuth0FunctionQuerylistTradespostAuth0FunctionAppSyncFunction85F4AF11",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListTradesDataResolverFnQueryListTradesDataResolverFnAppSyncFunctionFF5AE17E",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listTrades\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TradeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/queryListTradesResolver"
+   }
+  },
+  "MutationcreateTradeinit0FunctionMutationcreateTradeinit0FunctionAppSyncFunction156B1470": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateTradeinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationcreateTradeinit0Function/MutationcreateTradeinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateTradeauth0FunctionMutationcreateTradeauth0FunctionAppSyncFunction9B966856": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/eda4511e01e0956a1b97d4ca904a6671ee21a1a583dff170fb18cbbd4f9dd6e6.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationcreateTradeauth0Function/MutationcreateTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateTradepostAuth0FunctionMutationcreateTradepostAuth0FunctionAppSyncFunction143935A9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationcreateTradepostAuth0Function/MutationcreateTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateTradeDataResolverFnMutationCreateTradeDataResolverFnAppSyncFunction6F23EF98": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b66785fcde2a99047af5a393013fa6c54fa7df10fc1bee849a8db4009ba9eb20.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationCreateTradeDataResolverFn/MutationCreateTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "createTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateTradeinit0FunctionMutationcreateTradeinit0FunctionAppSyncFunction156B1470",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateTradeauth0FunctionMutationcreateTradeauth0FunctionAppSyncFunction9B966856",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateTradepostAuth0FunctionMutationcreateTradepostAuth0FunctionAppSyncFunction143935A9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateTradeDataResolverFnMutationCreateTradeDataResolverFnAppSyncFunction6F23EF98",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TradeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/mutationCreateTradeResolver"
+   }
+  },
+  "MutationupdateTradeinit0FunctionMutationupdateTradeinit0FunctionAppSyncFunctionAAB7DC8F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateTradeinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationupdateTradeinit0Function/MutationupdateTradeinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateTradeauth0FunctionMutationupdateTradeauth0FunctionAppSyncFunctionF42C99DC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cd0b7103bd7f11aa4b0201590c636ce2c0edbf9e5dd157cb5e0819bc7d7f4738.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationupdateTradeauth0Function/MutationupdateTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateTradepostAuth0FunctionMutationupdateTradepostAuth0FunctionAppSyncFunction3DD88CEA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationupdateTradepostAuth0Function/MutationupdateTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateTradeDataResolverFnMutationUpdateTradeDataResolverFnAppSyncFunctionC15D27FE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationUpdateTradeDataResolverFn/MutationUpdateTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "updateTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateTradeinit0FunctionMutationupdateTradeinit0FunctionAppSyncFunctionAAB7DC8F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateTradeauth0FunctionMutationupdateTradeauth0FunctionAppSyncFunctionF42C99DC",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateTradepostAuth0FunctionMutationupdateTradepostAuth0FunctionAppSyncFunction3DD88CEA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateTradeDataResolverFnMutationUpdateTradeDataResolverFnAppSyncFunctionC15D27FE",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TradeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/mutationUpdateTradeResolver"
+   }
+  },
+  "MutationdeleteTradeauth0FunctionMutationdeleteTradeauth0FunctionAppSyncFunction46D6D5CE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0064bfbd7fdaea51ef97e8494f036beca0be53bc5c1c7b05c29a27f9cdb28bd2.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationdeleteTradeauth0Function/MutationdeleteTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteTradepostAuth0FunctionMutationdeleteTradepostAuth0FunctionAppSyncFunctionF129B855": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationdeleteTradepostAuth0Function/MutationdeleteTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteTradeDataResolverFnMutationDeleteTradeDataResolverFnAppSyncFunctionE7F2467A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TradeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "TradeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/MutationDeleteTradeDataResolverFn/MutationDeleteTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "deleteTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteTradeauth0FunctionMutationdeleteTradeauth0FunctionAppSyncFunction46D6D5CE",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteTradepostAuth0FunctionMutationdeleteTradepostAuth0FunctionAppSyncFunctionF129B855",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteTradeDataResolverFnMutationDeleteTradeDataResolverFnAppSyncFunctionE7F2467A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TradeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/mutationDeleteTradeResolver"
+   }
+  },
+  "SubscriptiononCreateTradeauth0FunctionSubscriptiononCreateTradeauth0FunctionAppSyncFunction313B154F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0064bfbd7fdaea51ef97e8494f036beca0be53bc5c1c7b05c29a27f9cdb28bd2.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononCreateTradeauth0Function/SubscriptiononCreateTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateTradepostAuth0FunctionSubscriptiononCreateTradepostAuth0FunctionAppSyncFunctionBF44AA65": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononCreateTradepostAuth0Function/SubscriptiononCreateTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateTradeDataResolverFnSubscriptionOnCreateTradeDataResolverFnAppSyncFunctionBB222370": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptionOnCreateTradeDataResolverFn/SubscriptionOnCreateTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "onCreateTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateTradeauth0FunctionSubscriptiononCreateTradeauth0FunctionAppSyncFunction313B154F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateTradepostAuth0FunctionSubscriptiononCreateTradepostAuth0FunctionAppSyncFunctionBF44AA65",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateTradeDataResolverFnSubscriptionOnCreateTradeDataResolverFnAppSyncFunctionBB222370",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/subscriptionOnCreateTradeResolver"
+   }
+  },
+  "SubscriptiononUpdateTradeauth0FunctionSubscriptiononUpdateTradeauth0FunctionAppSyncFunction9AB3C0DF": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0064bfbd7fdaea51ef97e8494f036beca0be53bc5c1c7b05c29a27f9cdb28bd2.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononUpdateTradeauth0Function/SubscriptiononUpdateTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateTradepostAuth0FunctionSubscriptiononUpdateTradepostAuth0FunctionAppSyncFunctionE682F49A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononUpdateTradepostAuth0Function/SubscriptiononUpdateTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateTradeDataResolverFnSubscriptionOnUpdateTradeDataResolverFnAppSyncFunction2CF8E25A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptionOnUpdateTradeDataResolverFn/SubscriptionOnUpdateTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "onUpdateTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateTradeauth0FunctionSubscriptiononUpdateTradeauth0FunctionAppSyncFunction9AB3C0DF",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateTradepostAuth0FunctionSubscriptiononUpdateTradepostAuth0FunctionAppSyncFunctionE682F49A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateTradeDataResolverFnSubscriptionOnUpdateTradeDataResolverFnAppSyncFunction2CF8E25A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/subscriptionOnUpdateTradeResolver"
+   }
+  },
+  "SubscriptiononDeleteTradeauth0FunctionSubscriptiononDeleteTradeauth0FunctionAppSyncFunction8D0DDA0E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteTradeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0064bfbd7fdaea51ef97e8494f036beca0be53bc5c1c7b05c29a27f9cdb28bd2.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononDeleteTradeauth0Function/SubscriptiononDeleteTradeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteTradepostAuth0FunctionSubscriptiononDeleteTradepostAuth0FunctionAppSyncFunction604FA369": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteTradepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptiononDeleteTradepostAuth0Function/SubscriptiononDeleteTradepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteTradeDataResolverFnSubscriptionOnDeleteTradeDataResolverFnAppSyncFunction76A1686A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPINONEDSAE7757C4Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteTradeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/SubscriptionOnDeleteTradeDataResolverFn/SubscriptionOnDeleteTradeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteTradeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+    },
+    "FieldName": "onDeleteTrade",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteTradeauth0FunctionSubscriptiononDeleteTradeauth0FunctionAppSyncFunction8D0DDA0E",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteTradepostAuth0FunctionSubscriptiononDeleteTradepostAuth0FunctionAppSyncFunction604FA369",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteTradeDataResolverFnSubscriptionOnDeleteTradeDataResolverFnAppSyncFunction76A1686A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteTrade\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/subscriptionOnDeleteTradeResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOwW6DMAyGn6X34DE47LyCduwm2L0yiUEpIUGx06pCvPsEnTrt9PuTP9l/AUX5Bq8HvHGmzZg528FyIhYyraAeVdX7L4w4kVDcoAreWLHBq4Y4pKhJVYklTH/Y++eMNz4v5u5xCqaDb+wcHZFJWZxgaYJ72MHRqnCe+e41LPWu112Ngu3z5H/6SF5vJargezukiHuj38/uSnFVXJ6RmYThfQvFJRyTHkm2AuvmfiaZk6h93QoO1g+r8sEQXPjlWuRQ5JAfLmxtFpMXOxE0j/wBoVfrhDYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-binancetraderroot-axelfernandes-sandbox-a913b3134f/data/amplifyData/Trade/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttTradeTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "TradeTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "GetAtt:TradeTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttTradeTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "Trade-",
+      {
+       "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifybinancetraderrootaxelfernandessandboxa913b3134fdataamplifyDataGraphQLAPIE8A19C99ApiId"
+       },
+       "GetAtt:TradeTable:Name"
+      ]
+     ]
+    }
+   }
+  }
+ }
+}

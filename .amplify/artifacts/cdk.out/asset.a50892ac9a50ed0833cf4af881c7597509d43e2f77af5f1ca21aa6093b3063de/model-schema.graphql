@@ -1,0 +1,48 @@
+type AccountSnapshot @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  total_equity: Float!
+  available_balance: Float!
+  timestamp: AWSDateTime!
+}
+
+type Signal @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  symbol: String!
+  direction: SignalDirection
+  entry_min: Float
+  entry_max: Float
+  stop_loss: Float
+  take_profit_1: Float
+  max_risk_percent: Float
+  rationale: AWSJSON
+  generated_at: AWSDateTime!
+  ai_confidence: Int
+  ai_comment: String
+}
+
+type Trade @model @auth(rules: [{allow: public, provider: apiKey}])
+{
+  symbol: String!
+  side: TradeSide
+  entry_price: Float!
+  exit_price: Float
+  quantity: Float!
+  stop_loss: Float!
+  take_profit: Float!
+  realized_pnl: Float
+  realized_pnl_percent: Float
+  status: String!
+  opened_at: AWSDateTime!
+  closed_at: AWSDateTime
+  ai_analysis: String
+}
+
+enum SignalDirection {
+  LONG
+  SHORT
+}
+
+enum TradeSide {
+  BUY
+  SELL
+}

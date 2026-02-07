@@ -5,8 +5,6 @@ import '@aws-amplify/ui-react/styles.css';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
 
-
-
 interface DashboardStats {
     totalEquity: number;
     availableBalance: number;
@@ -176,37 +174,37 @@ function App() {
         );
     }
 
-    return (
-        <Authenticator>
-            {({ signOut }) => (
-                <div className="app">
-                    <header className="header">
-                        <h1 className="logo">
-                            <span className="logo-icon">₿</span> Binance Trader
-                        </h1>
-                        <div className="header-badge">
-                            <button
-                                className="badge warning"
-                                onClick={signOut}
-                                style={{ cursor: 'pointer', border: 'none', marginRight: '10px' }}
-                            >
-                                Sign Out
-                            </button>
-                            <button
-                                className={`badge ${scanning ? 'loading' : 'success'}`}
-                                onClick={handleScanNow}
-                                disabled={scanning}
-                                style={{ cursor: 'pointer', border: 'none', font: 'inherit' }}
-                            >
-                                {scanning ? 'SCANNING...' : 'SCAN NOW'}
-                            </button>
-                            <span className={`badge ${stats?.tradingMode === 'paper' ? 'warning' : 'success'}`}>
-                                {stats?.tradingMode?.toUpperCase()} MODE
-                            </span>
-                        </div>
-                    </header>
+    const content = (signOut?: () => void) => (
+        <div className="app">
+            <header className="header">
+                <h1 className="logo">
+                    <span className="logo-icon">₿</span> Binance Trader
+                </h1>
+                <div className="header-badge">
+                    {signOut && (
+                        <button
+                            className="badge warning"
+                            onClick={signOut}
+                            style={{ cursor: 'pointer', border: 'none', marginRight: '10px' }}
+                        >
+                            Sign Out
+                        </button>
+                    )}
+                    <button
+                        className={`badge ${scanning ? 'loading' : 'success'}`}
+                        onClick={handleScanNow}
+                        disabled={scanning}
+                        style={{ cursor: 'pointer', border: 'none', font: 'inherit' }}
+                    >
+                        {scanning ? 'SCANNING...' : 'SCAN NOW'}
+                    </button>
+                    <span className={`badge ${stats?.tradingMode === 'paper' ? 'warning' : 'success'}`}>
+                        {stats?.tradingMode?.toUpperCase()} MODE
+                    </span>
+                </div>
+            </header>
 
-                    <main className="main-content">
+            <main className="main-content">
                         {/* AI Market Brief */}
                         {marketBrief && (
                             <div className="glass-card fade-in" style={{ borderLeft: '4px solid var(--accent-cyan)' }}>
@@ -439,7 +437,11 @@ function App() {
                         </section>
                     </main>
                 </div>
-            )}
+    );
+
+    return (
+        <Authenticator>
+            {({ signOut }) => content(signOut)}
         </Authenticator>
     );
 }
