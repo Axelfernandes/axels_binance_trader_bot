@@ -31,7 +31,7 @@ const schema = a.schema({
         take_profit: a.float().required(),
         realized_pnl: a.float(),
         realized_pnl_percent: a.float(),
-        status: a.enum(['OPEN', 'CLOSED', 'CANCELLED']).required(),
+        status: a.enum(['OPEN', 'CLOSED', 'CANCELLED']),
         opened_at: a.datetime().required(),
         closed_at: a.datetime(),
         ai_analysis: a.string(),
