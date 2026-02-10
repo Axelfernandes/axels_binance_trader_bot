@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Authenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
 
@@ -205,245 +203,241 @@ function App() {
             </header>
 
             <main className="main-content">
-                        {/* AI Market Brief */}
-                        {marketBrief && (
-                            <div className="glass-card fade-in" style={{ borderLeft: '4px solid var(--accent-cyan)' }}>
-                                <div className="stat-label" style={{ marginBottom: '10px' }}>🤖 AI Market Intelligence</div>
-                                <p style={{ fontSize: '16px', lineHeight: '1.6' }}>{marketBrief}</p>
-                            </div>
-                        )}
+                {/* AI Market Brief */}
+                {marketBrief && (
+                    <div className="glass-card fade-in" style={{ borderLeft: '4px solid var(--accent-cyan)' }}>
+                        <div className="stat-label" style={{ marginBottom: '10px' }}>🤖 AI Market Intelligence</div>
+                        <p style={{ fontSize: '16px', lineHeight: '1.6' }}>{marketBrief}</p>
+                    </div>
+                )}
 
-                        {/* Stats Grid */}
-                        <div className="stats-grid">
-                            <div className="stat-card fade-in">
-                                <div className="stat-label">Total Equity</div>
-                                <div className="stat-value">${stats?.totalEquity.toFixed(2)}</div>
-                            </div>
+                {/* Stats Grid */}
+                <div className="stats-grid">
+                    <div className="stat-card fade-in">
+                        <div className="stat-label">Total Equity</div>
+                        <div className="stat-value">${stats?.totalEquity.toFixed(2)}</div>
+                    </div>
 
-                            <div className="stat-card fade-in">
-                                <div className="stat-label">Available Balance</div>
-                                <div className="stat-value">${stats?.availableBalance.toFixed(2)}</div>
-                            </div>
+                    <div className="stat-card fade-in">
+                        <div className="stat-label">Available Balance</div>
+                        <div className="stat-value">${stats?.availableBalance.toFixed(2)}</div>
+                    </div>
 
-                            <div className="stat-card fade-in">
-                                <div className="stat-label">Daily P&L</div>
-                                <div className={`stat-value ${stats && stats.dailyPnl >= 0 ? 'profit' : 'loss'}`}>
-                                    ${stats?.dailyPnl.toFixed(2)}
-                                </div>
-                            </div>
-
-                            <div className="stat-card fade-in">
-                                <div className="stat-label">Win Rate</div>
-                                <div className="stat-value">{stats?.winRate}%</div>
-                            </div>
-
-                            <div className="stat-card fade-in">
-                                <div className="stat-label">Open Positions</div>
-                                <div className="stat-value">{stats?.openPositions}</div>
-                            </div>
+                    <div className="stat-card fade-in">
+                        <div className="stat-label">Daily P&L</div>
+                        <div className={`stat-value ${stats && stats.dailyPnl >= 0 ? 'profit' : 'loss'}`}>
+                            ${stats?.dailyPnl.toFixed(2)}
                         </div>
+                    </div>
 
-                        {/* Charts Section */}
-                        <section className="section">
-                            <h2 className="section-title">Market Analysis</h2>
-                            <div className="charts-container" style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
-                                gap: '20px'
-                            }}>
-                                {allSymbols.map(symbol => (
-                                    chartData[symbol] && <PriceChart key={symbol} symbol={symbol} data={chartData[symbol]} />
-                                ))}
-                            </div>
-                        </section>
+                    <div className="stat-card fade-in">
+                        <div className="stat-label">Win Rate</div>
+                        <div className="stat-value">{stats?.winRate}%</div>
+                    </div>
 
-                        {/* Recent Signals */}
-                        <section className="section">
-                            <h2 className="section-title">Recent Signals</h2>
-                            <div className="signals-grid">
-                                {signals.map((signal) => (
-                                    <div key={signal.id} className="glass-card signal-card fade-in">
-                                        <div className="signal-header">
-                                            <h3 className="signal-symbol">{signal.symbol}</h3>
-                                            <span className={`badge ${signal.direction === 'LONG' ? 'success' : (signal.direction === 'SHORT' ? 'danger' : 'neutral')}`}>
-                                                {signal.direction}
-                                            </span>
+                    <div className="stat-card fade-in">
+                        <div className="stat-label">Open Positions</div>
+                        <div className="stat-value">{stats?.openPositions}</div>
+                    </div>
+                </div>
+
+                {/* Charts Section */}
+                <section className="section">
+                    <h2 className="section-title">Market Analysis</h2>
+                    <div className="charts-container" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
+                        gap: '20px'
+                    }}>
+                        {allSymbols.map(symbol => (
+                            chartData[symbol] && <PriceChart key={symbol} symbol={symbol} data={chartData[symbol]} />
+                        ))}
+                    </div>
+                </section>
+
+                {/* Recent Signals */}
+                <section className="section">
+                    <h2 className="section-title">Recent Signals</h2>
+                    <div className="signals-grid">
+                        {signals.map((signal) => (
+                            <div key={signal.id} className="glass-card signal-card fade-in">
+                                <div className="signal-header">
+                                    <h3 className="signal-symbol">{signal.symbol}</h3>
+                                    <span className={`badge ${signal.direction === 'LONG' ? 'success' : (signal.direction === 'SHORT' ? 'danger' : 'neutral')}`}>
+                                        {signal.direction}
+                                    </span>
+                                </div>
+
+                                {signal.ai_confidence && (
+                                    <div className="signal-details" style={{ borderLeft: `4px solid ${signal.ai_confidence > 75 ? 'var(--profit-green)' : 'var(--warning-yellow)'}` }}>
+                                        <div className="signal-row">
+                                            <span className="text-muted">🤖 AI Confidence:</span>
+                                            <span className={signal.ai_confidence > 75 ? 'text-profit' : 'text-warning'}>{signal.ai_confidence}%</span>
                                         </div>
-
-                                        {signal.ai_confidence && (
-                                            <div className="signal-details" style={{ borderLeft: `4px solid ${signal.ai_confidence > 75 ? 'var(--profit-green)' : 'var(--warning-yellow)'}` }}>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">🤖 AI Confidence:</span>
-                                                    <span className={signal.ai_confidence > 75 ? 'text-profit' : 'text-warning'}>{signal.ai_confidence}%</span>
-                                                </div>
-                                                <div className="text-secondary" style={{ fontSize: '12px', marginTop: '4px' }}>
-                                                    "{signal.ai_comment}"
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {signal.direction === 'LONG' && (
-                                            <div className="signal-details">
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Entry:</span>
-                                                    <span>${parseFloat(signal.entry_max || '0').toFixed(2)}</span>
-                                                </div>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Stop Loss:</span>
-                                                    <span className="text-loss">${parseFloat(signal.stop_loss || '0').toFixed(2)}</span>
-                                                </div>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Take Profit:</span>
-                                                    <span className="text-profit">${parseFloat(signal.take_profit_1 || '0').toFixed(2)}</span>
-                                                </div>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Max Risk:</span>
-                                                    <span>{signal.max_risk_percent}%</span>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {signal.direction === 'SHORT' && (
-                                            <div className="signal-details">
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Entry:</span>
-                                                    <span>${parseFloat(signal.entry_min || '0').toFixed(2)}</span>
-                                                </div>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Stop Loss:</span>
-                                                    <span className="text-profit">${parseFloat(signal.stop_loss || '0').toFixed(2)}</span>
-                                                </div>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Take Profit:</span>
-                                                    <span className="text-loss">${parseFloat(signal.take_profit_1 || '0').toFixed(2)}</span>
-                                                </div>
-                                                <div className="signal-row">
-                                                    <span className="text-muted">Max Risk:</span>
-                                                    <span>{signal.max_risk_percent}%</span>
-                                                </div>
-                                            </div>
-                                        )}
-
-
-                                        <div className="signal-rationale">
-                                            <div className="text-muted" style={{ fontSize: '12px', marginBottom: '8px' }}>Rationale:</div>
-                                            <ul style={{ paddingLeft: '20px', fontSize: '13px' }}>
-                                                {(typeof signal.rationale === 'string' ? JSON.parse(signal.rationale) : signal.rationale).map((reason: string, i: number) => (
-                                                    <li key={i} className="text-secondary">{reason}</li>
-                                                ))}
-                                            </ul>
-                                        </div>
-
-                                        <div className="signal-time text-muted">
-                                            {new Date(signal.generated_at).toLocaleString()}
+                                        <div className="text-secondary" style={{ fontSize: '12px', marginTop: '4px' }}>
+                                            "{signal.ai_comment}"
                                         </div>
                                     </div>
-                                ))}
+                                )}
+
+                                {signal.direction === 'LONG' && (
+                                    <div className="signal-details">
+                                        <div className="signal-row">
+                                            <span className="text-muted">Entry:</span>
+                                            <span>${parseFloat(signal.entry_max || '0').toFixed(2)}</span>
+                                        </div>
+                                        <div className="signal-row">
+                                            <span className="text-muted">Stop Loss:</span>
+                                            <span className="text-loss">${parseFloat(signal.stop_loss || '0').toFixed(2)}</span>
+                                        </div>
+                                        <div className="signal-row">
+                                            <span className="text-muted">Take Profit:</span>
+                                            <span className="text-profit">${parseFloat(signal.take_profit_1 || '0').toFixed(2)}</span>
+                                        </div>
+                                        <div className="signal-row">
+                                            <span className="text-muted">Max Risk:</span>
+                                            <span>{signal.max_risk_percent}%</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {signal.direction === 'SHORT' && (
+                                    <div className="signal-details">
+                                        <div className="signal-row">
+                                            <span className="text-muted">Entry:</span>
+                                            <span>${parseFloat(signal.entry_min || '0').toFixed(2)}</span>
+                                        </div>
+                                        <div className="signal-row">
+                                            <span className="text-muted">Stop Loss:</span>
+                                            <span className="text-profit">${parseFloat(signal.stop_loss || '0').toFixed(2)}</span>
+                                        </div>
+                                        <div className="signal-row">
+                                            <span className="text-muted">Take Profit:</span>
+                                            <span className="text-loss">${parseFloat(signal.take_profit_1 || '0').toFixed(2)}</span>
+                                        </div>
+                                        <div className="signal-row">
+                                            <span className="text-muted">Max Risk:</span>
+                                            <span>{signal.max_risk_percent}%</span>
+                                        </div>
+                                    </div>
+                                )}
+
+
+                                <div className="signal-rationale">
+                                    <div className="text-muted" style={{ fontSize: '12px', marginBottom: '8px' }}>Rationale:</div>
+                                    <ul style={{ paddingLeft: '20px', fontSize: '13px' }}>
+                                        {(typeof signal.rationale === 'string' ? JSON.parse(signal.rationale) : signal.rationale).map((reason: string, i: number) => (
+                                            <li key={i} className="text-secondary">{reason}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="signal-time text-muted">
+                                    {new Date(signal.generated_at).toLocaleString()}
+                                </div>
                             </div>
-                        </section>
+                        ))}
+                    </div>
+                </section>
 
-                        {/* Open Positions */}
-                        <section className="section">
-                            <h2 className="section-title">Open Positions</h2>
-                            {openTrades.length === 0 ? (
-                                <div className="glass-card">
-                                    <p className="text-muted">No open positions</p>
-                                </div>
-                            ) : (
-                                <div className="table-container">
-                                    <table className="glass-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Symbol</th>
-                                                <th>Side</th>
-                                                <th>Entry Price</th>
-                                                <th>Quantity</th>
-                                                <th>Stop Loss</th>
-                                                <th>Take Profit</th>
-                                                <th>Opened At</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {openTrades.map((trade) => (
-                                                <tr key={trade.id}>
-                                                    <td><strong>{trade.symbol}</strong></td>
-                                                    <td>
-                                                        <span className={`badge ${trade.side === 'BUY' ? 'success' : 'danger'}`}>
-                                                            {trade.side}
-                                                        </span>
-                                                    </td>
-                                                    <td>${parseFloat(trade.entry_price).toFixed(2)}</td>
-                                                    <td>{parseFloat(trade.quantity).toFixed(6)}</td>
-                                                    <td className={trade.side === 'BUY' ? 'text-loss' : 'text-profit'}>${parseFloat(trade.stop_loss).toFixed(2)}</td>
-                                                    <td className={trade.side === 'BUY' ? 'text-profit' : 'text-loss'}>${parseFloat(trade.take_profit).toFixed(2)}</td>
-                                                    <td className="text-muted">{new Date(trade.opened_at).toLocaleString()}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
-                        </section>
+                {/* Open Positions */}
+                <section className="section">
+                    <h2 className="section-title">Open Positions</h2>
+                    {openTrades.length === 0 ? (
+                        <div className="glass-card">
+                            <p className="text-muted">No open positions</p>
+                        </div>
+                    ) : (
+                        <div className="table-container">
+                            <table className="glass-table">
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Side</th>
+                                        <th>Entry Price</th>
+                                        <th>Quantity</th>
+                                        <th>Stop Loss</th>
+                                        <th>Take Profit</th>
+                                        <th>Opened At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {openTrades.map((trade) => (
+                                        <tr key={trade.id}>
+                                            <td><strong>{trade.symbol}</strong></td>
+                                            <td>
+                                                <span className={`badge ${trade.side === 'BUY' ? 'success' : 'danger'}`}>
+                                                    {trade.side}
+                                                </span>
+                                            </td>
+                                            <td>${parseFloat(trade.entry_price).toFixed(2)}</td>
+                                            <td>{parseFloat(trade.quantity).toFixed(6)}</td>
+                                            <td className={trade.side === 'BUY' ? 'text-loss' : 'text-profit'}>${parseFloat(trade.stop_loss).toFixed(2)}</td>
+                                            <td className={trade.side === 'BUY' ? 'text-profit' : 'text-loss'}>${parseFloat(trade.take_profit).toFixed(2)}</td>
+                                            <td className="text-muted">{new Date(trade.opened_at).toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </section>
 
-                        {/* Trade History */}
-                        <section className="section">
-                            <h2 className="section-title">Trade History</h2>
-                            {closedTrades.length === 0 ? (
-                                <div className="glass-card">
-                                    <p className="text-muted">No trade history yet</p>
-                                </div>
-                            ) : (
-                                <div className="table-container">
-                                    <table className="glass-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Symbol</th>
-                                                <th>Entry/Exit</th>
-                                                <th>PnL ($ / %)</th>
-                                                <th>AI Analysis</th>
-                                                <th>Status</th>
-                                                <th>Closed At</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {closedTrades.map((trade) => (
-                                                <tr key={trade.id}>
-                                                    <td><strong>{trade.symbol}</strong></td>
-                                                    <td>
-                                                        <div>${parseFloat(trade.entry_price).toFixed(2)}</div>
-                                                        <div className="text-muted" style={{ fontSize: '14px' }}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
-                                                    </td>
-                                                    <td>
-                                                        <div className={parseFloat(trade.realized_pnl || '0') >= 0 ? 'text-profit' : 'text-loss'}>
-                                                            {parseFloat(trade.realized_pnl || '0') >= 0 ? '+' : ''}${parseFloat(trade.realized_pnl || '0').toFixed(2)}
-                                                        </div>
-                                                        <div className={parseFloat(trade.realized_pnl_percent || '0') >= 0 ? 'text-profit' : 'text-loss'} style={{ fontSize: '12px' }}>
-                                                            {parseFloat(trade.realized_pnl_percent || '0') >= 0 ? '+' : ''}{parseFloat(trade.realized_pnl_percent || '0').toFixed(2)}%
-                                                        </div>
-                                                    </td>
-                                                    <td style={{ maxWidth: '300px', fontSize: '13px' }}>
-                                                        {trade.ai_analysis || <span className="text-muted">No analysis</span>}
-                                                    </td>
-                                                    <td>
-                                                        <span className="badge neutral">{trade.status}</span>
-                                                    </td>
-                                                    <td className="text-muted">{new Date(trade.closed_at || '').toLocaleString()}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
-                        </section>
-                    </main>
-                </div>
+                {/* Trade History */}
+                <section className="section">
+                    <h2 className="section-title">Trade History</h2>
+                    {closedTrades.length === 0 ? (
+                        <div className="glass-card">
+                            <p className="text-muted">No trade history yet</p>
+                        </div>
+                    ) : (
+                        <div className="table-container">
+                            <table className="glass-table">
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Entry/Exit</th>
+                                        <th>PnL ($ / %)</th>
+                                        <th>AI Analysis</th>
+                                        <th>Status</th>
+                                        <th>Closed At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {closedTrades.map((trade) => (
+                                        <tr key={trade.id}>
+                                            <td><strong>{trade.symbol}</strong></td>
+                                            <td>
+                                                <div>${parseFloat(trade.entry_price).toFixed(2)}</div>
+                                                <div className="text-muted" style={{ fontSize: '14px' }}>${parseFloat(trade.exit_price || '0').toFixed(2)}</div>
+                                            </td>
+                                            <td>
+                                                <div className={parseFloat(trade.realized_pnl || '0') >= 0 ? 'text-profit' : 'text-loss'}>
+                                                    {parseFloat(trade.realized_pnl || '0') >= 0 ? '+' : ''}${parseFloat(trade.realized_pnl || '0').toFixed(2)}
+                                                </div>
+                                                <div className={parseFloat(trade.realized_pnl_percent || '0') >= 0 ? 'text-profit' : 'text-loss'} style={{ fontSize: '12px' }}>
+                                                    {parseFloat(trade.realized_pnl_percent || '0') >= 0 ? '+' : ''}{parseFloat(trade.realized_pnl_percent || '0').toFixed(2)}%
+                                                </div>
+                                            </td>
+                                            <td style={{ maxWidth: '300px', fontSize: '13px' }}>
+                                                {trade.ai_analysis || <span className="text-muted">No analysis</span>}
+                                            </td>
+                                            <td>
+                                                <span className="badge neutral">{trade.status}</span>
+                                            </td>
+                                            <td className="text-muted">{new Date(trade.closed_at || '').toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </section>
+            </main>
+        </div>
     );
 
-    return (
-        <Authenticator>
-            {({ signOut }) => content(signOut)}
-        </Authenticator>
-    );
+    return content();
 }
 
 export default App;
