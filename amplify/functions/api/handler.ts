@@ -42,4 +42,15 @@ app.get('/api/market-brief', async (req, res) => {
     res.json({ brief: 'Market data loading...' });
 });
 
+// Debug catch-all
+app.use((req, res) => {
+    console.log(`[DEBUG] Unmatched ${req.method} request to: ${req.path}`);
+    res.status(404).json({ 
+        error: 'Not Found', 
+        method: req.method,
+        path: req.path,
+        message: 'This route is not implemented in the current Lambda handler.'
+    });
+});
+
 export const handler: Handler = serverlessExpress({ app });

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
+import outputs from './amplify_outputs.json';
 
 interface DashboardStats {
     totalEquity: number;
@@ -59,8 +60,10 @@ function App() {
     const [marketBrief, setMarketBrief] = useState<string>('');
 
     useEffect(() => {
-        if (import.meta.env.VITE_API_URL) {
-            axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+        const apiUrl = import.meta.env.VITE_API_URL || (outputs as any).custom?.API?.url;
+        if (apiUrl) {
+            axios.defaults.baseURL = apiUrl;
+            console.log('API URL set to:', apiUrl);
         }
     }, []);
 
@@ -70,24 +73,31 @@ function App() {
         const interval = setInterval(fetchData, 10000); // Poll other data every 10s
 
         // WebSocket setup for real-time prices
-        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsHost = window.location.hostname === 'localhost' ? 'localhost:3001' : window.location.host;
-        const ws = new WebSocket(`${wsProtocol}//${wsHost}`);
+        const isLocal = window.location.hostname === 'localhost';
+        
+        if (isLocal) {
+            const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsHost = 'localhost:3001';
+            const ws = new WebSocket(`${wsProtocol}//${wsHost}`);
 
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data.type === 'PRICE_UPDATE') {
-                updateRealtimePrice(data.symbol, data.price);
-            }
-        };
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.type === 'PRICE_UPDATE') {
+                    updateRealtimePrice(data.symbol, data.price);
+                }
+            };
 
-        ws.onopen = () => console.log('WebSocket Connected');
-        ws.onclose = () => console.log('WebSocket Disconnected');
+            ws.onopen = () => console.log('WebSocket Connected');
+            ws.onclose = () => console.log('WebSocket Disconnected');
 
-        return () => {
-            clearInterval(interval);
-            ws.close();
-        };
+            return () => {
+                clearInterval(interval);
+                ws.close();
+            };
+        } else {
+            console.log('WebSockets disabled in production (serverless deployment)');
+            return () => clearInterval(interval);
+        }
     }, []);
 
     const fetchBrief = async () => {
