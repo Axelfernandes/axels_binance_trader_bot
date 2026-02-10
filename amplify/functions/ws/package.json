@@ -1,0 +1,14 @@
+{
+    "name": "ws-handler",
+    "version": "1.0.0",
+    "type": "module",
+    "dependencies": {
+        "aws-amplify": "^6.0.1",
+        "@aws-amplify/backend": "^1.0.0",
+        "winston": "^3.11.0"
+    },
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.130",
+        "typescript": "^5.0.0"
+    }
+}

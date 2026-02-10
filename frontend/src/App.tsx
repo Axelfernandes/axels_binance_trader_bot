@@ -58,6 +58,7 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [scanning, setScanning] = useState(false);
     const [marketBrief, setMarketBrief] = useState<string>('');
+    const [tradingConfig, setTradingConfig] = useState<{ cadence: string; enabled: boolean } | null>(null);
 
     useEffect(() => {
         const apiUrl = import.meta.env.VITE_API_URL || (outputs as any).custom?.API?.url;
@@ -70,40 +71,45 @@ function App() {
     useEffect(() => {
         fetchData();
         fetchBrief();
+        fetchTradingConfig();
         const interval = setInterval(fetchData, 10000); // Poll other data every 10s
 
         // WebSocket setup for real-time prices
+        const wsUrl = (outputs as any).custom?.WS?.url;
         const isLocal = window.location.hostname === 'localhost';
-        
-        if (isLocal) {
-            const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsHost = 'localhost:3001';
-            const ws = new WebSocket(`${wsProtocol}//${wsHost}`);
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsHost = isLocal ? 'localhost:3001' : window.location.host;
+        const ws = new WebSocket(wsUrl || `${wsProtocol}//${wsHost}`);
 
-            ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                if (data.type === 'PRICE_UPDATE') {
-                    updateRealtimePrice(data.symbol, data.price);
-                }
-            };
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.type === 'PRICE_UPDATE') {
+                updateRealtimePrice(data.symbol, data.price);
+            }
+        };
 
-            ws.onopen = () => console.log('WebSocket Connected');
-            ws.onclose = () => console.log('WebSocket Disconnected');
+        ws.onopen = () => console.log('WebSocket Connected');
+        ws.onclose = () => console.log('WebSocket Disconnected');
 
-            return () => {
-                clearInterval(interval);
-                ws.close();
-            };
-        } else {
-            console.log('WebSockets disabled in production (serverless deployment)');
-            return () => clearInterval(interval);
-        }
+        return () => {
+            clearInterval(interval);
+            ws.close();
+        };
     }, []);
 
     const fetchBrief = async () => {
         try {
             const res = await axios.get('/api/market-brief');
             setMarketBrief(res.data.brief);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const fetchTradingConfig = async () => {
+        try {
+            const res = await axios.get('/api/trading/config');
+            setTradingConfig(res.data);
         } catch (e) {
             console.error(e);
         }
@@ -172,6 +178,15 @@ function App() {
         }
     };
 
+    const updateTradingConfig = async (next: { cadence?: string; enabled?: boolean }) => {
+        try {
+            const res = await axios.post('/api/trading/config', next);
+            setTradingConfig(res.data);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     if (loading) {
         return (
             <div className="app">
@@ -209,6 +224,31 @@ function App() {
                     <span className={`badge ${stats?.tradingMode === 'paper' ? 'warning' : 'success'}`}>
                         {stats?.tradingMode?.toUpperCase()} MODE
                     </span>
+                    <div className="badge" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ opacity: 0.8 }}>Cadence</span>
+                        <select
+                            value={tradingConfig?.cadence || 'STANDARD_1M'}
+                            onChange={(e) => updateTradingConfig({ cadence: e.target.value })}
+                            style={{
+                                background: 'transparent',
+                                color: 'inherit',
+                                border: '1px solid rgba(255,255,255,0.3)',
+                                borderRadius: '6px',
+                                padding: '4px 8px',
+                            }}
+                        >
+                            <option value="FAST_5S">5s</option>
+                            <option value="STANDARD_1M">1m</option>
+                            <option value="SLOW_10M">10m</option>
+                        </select>
+                        <button
+                            className={`badge ${tradingConfig?.enabled ? 'success' : 'warning'}`}
+                            onClick={() => updateTradingConfig({ enabled: !(tradingConfig?.enabled ?? true) })}
+                            style={{ cursor: 'pointer', border: 'none', font: 'inherit' }}
+                        >
+                            {tradingConfig?.enabled ? 'ENGINE ON' : 'ENGINE OFF'}
+                        </button>
+                    </div>
                 </div>
             </header>
 

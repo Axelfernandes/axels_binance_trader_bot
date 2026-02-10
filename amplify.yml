@@ -5,6 +5,7 @@ frontend:
       commands:
         - npm ci --prefix amplify
         - npm ci --prefix frontend
+        - cp amplify/amplify_outputs.json frontend/src/amplify_outputs.json
     build:
       commands:
         - npm run build --prefix frontend

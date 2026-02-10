@@ -6,14 +6,37 @@ import { CandleChartInterval } from 'binance-api-node';
 
 // Import services, config, and utils (assuming they are moved to ./src)
 import client from './src/config/database';
-import tradingService from './src/services/trading.service';
 import binanceService from './src/services/binance.service';
 import logger from './src/utils/logger';
 import geminiService from './src/services/gemini.service';
+import { SFNClient, StartExecutionCommand, StopExecutionCommand } from '@aws-sdk/client-sfn';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const sfnClient = new SFNClient({});
+
+const CONFIG_ID = 'main';
+const DEFAULT_CONFIG = {
+    cadence: 'STANDARD_1M',
+    enabled: true,
+};
+
+async function getOrCreateConfig() {
+    const existing = await client.models.TradingConfig.get({ id: CONFIG_ID });
+    if (existing?.data) {
+        return existing.data;
+    }
+
+    const created = await client.models.TradingConfig.create({
+        id: CONFIG_ID,
+        cadence: DEFAULT_CONFIG.cadence,
+        enabled: DEFAULT_CONFIG.enabled,
+        updated_at: new Date().toISOString(),
+    });
+    return created.data;
+}
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -145,8 +168,31 @@ app.get('/api/klines/:symbol', async (req, res) => {
 // Start trading engine
 app.post('/api/trading/start', async (req, res) => {
     try {
-        await tradingService.start();
-        res.json({ message: 'Trading engine started' });
+        const config = await getOrCreateConfig();
+        const updated = await client.models.TradingConfig.update({
+            id: CONFIG_ID,
+            enabled: true,
+            cadence: config.cadence,
+            fast_execution_arn: config.fast_execution_arn,
+            updated_at: new Date().toISOString(),
+        });
+
+        if (config.cadence === 'FAST_5S' && process.env.FAST_STATE_MACHINE_ARN) {
+            const exec = await sfnClient.send(new StartExecutionCommand({
+                stateMachineArn: process.env.FAST_STATE_MACHINE_ARN,
+                input: JSON.stringify({ cadence: 'FAST_5S', continue: true }),
+            }));
+
+            await client.models.TradingConfig.update({
+                id: CONFIG_ID,
+                cadence: config.cadence,
+                enabled: true,
+                fast_execution_arn: exec.executionArn,
+                updated_at: new Date().toISOString(),
+            });
+        }
+
+        res.json({ message: 'Trading engine enabled', config: updated.data });
     } catch (error: any) {
         logger.error('Error starting trading engine:', error.message);
         res.status(500).json({ error: error.message });
@@ -156,10 +202,79 @@ app.post('/api/trading/start', async (req, res) => {
 // Stop trading engine
 app.post('/api/trading/stop', (req, res) => {
     try {
-        tradingService.stop();
-        res.json({ message: 'Trading engine stopped' });
+        client.models.TradingConfig.get({ id: CONFIG_ID })
+            .then(async (existing) => {
+                const config = existing.data;
+                if (config?.fast_execution_arn) {
+                    await sfnClient.send(new StopExecutionCommand({
+                        executionArn: config.fast_execution_arn,
+                        cause: 'Trading engine stopped',
+                    }));
+                }
+            })
+            .catch((err) => logger.warn('Unable to stop fast execution:', err?.message || err));
+
+        client.models.TradingConfig.update({
+            id: CONFIG_ID,
+            enabled: false,
+            updated_at: new Date().toISOString(),
+        }).catch((err) => logger.warn('Failed to update trading config:', err?.message || err));
+
+        res.json({ message: 'Trading engine disabled' });
     } catch (error: any) {
         logger.error('Error stopping trading engine:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get trading config
+app.get('/api/trading/config', async (req, res) => {
+    try {
+        const config = await getOrCreateConfig();
+        res.json(config);
+    } catch (error: any) {
+        logger.error('Error fetching trading config:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Update trading config (cadence + enabled)
+app.post('/api/trading/config', async (req, res) => {
+    try {
+        const { cadence, enabled } = req.body || {};
+        const current = await getOrCreateConfig();
+        const nextCadence = cadence || current.cadence;
+        const nextEnabled = typeof enabled === 'boolean' ? enabled : current.enabled;
+
+        let fastExecutionArn = current.fast_execution_arn;
+
+        if (nextCadence !== 'FAST_5S' && fastExecutionArn) {
+            await sfnClient.send(new StopExecutionCommand({
+                executionArn: fastExecutionArn,
+                cause: 'Cadence switched away from FAST_5S',
+            }));
+            fastExecutionArn = undefined;
+        }
+
+        if (nextCadence === 'FAST_5S' && nextEnabled && process.env.FAST_STATE_MACHINE_ARN) {
+            const exec = await sfnClient.send(new StartExecutionCommand({
+                stateMachineArn: process.env.FAST_STATE_MACHINE_ARN,
+                input: JSON.stringify({ cadence: 'FAST_5S', continue: true }),
+            }));
+            fastExecutionArn = exec.executionArn;
+        }
+
+        const updated = await client.models.TradingConfig.update({
+            id: CONFIG_ID,
+            cadence: nextCadence,
+            enabled: nextEnabled,
+            fast_execution_arn: fastExecutionArn,
+            updated_at: new Date().toISOString(),
+        });
+
+        res.json(updated.data);
+    } catch (error: any) {
+        logger.error('Error updating trading config:', error.message);
         res.status(500).json({ error: error.message });
     }
 });

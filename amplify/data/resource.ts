@@ -36,6 +36,18 @@ const schema = a.schema({
         closed_at: a.datetime(),
         ai_analysis: a.string(),
     }).authorization(allow => [allow.publicApiKey()]),
+
+    TradingConfig: a.model({
+        cadence: a.enum(['FAST_5S', 'STANDARD_1M', 'SLOW_10M']).required(),
+        enabled: a.boolean().required(),
+        fast_execution_arn: a.string(),
+        updated_at: a.datetime().required(),
+    }).authorization(allow => [allow.publicApiKey()]),
+
+    WsConnection: a.model({
+        connection_id: a.string().required(),
+        connected_at: a.datetime().required(),
+    }).authorization(allow => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
