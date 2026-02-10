@@ -5,7 +5,7 @@ const schema = a.schema({
         total_equity: a.float().required(),
         available_balance: a.float().required(),
         timestamp: a.datetime().required(),
-    }).authorization(allow => [allow.publicApiKey()]),
+    }).authorization(allow => [allow.authenticated()]),
 
     Signal: a.model({
         symbol: a.string().required(),
@@ -19,7 +19,7 @@ const schema = a.schema({
         generated_at: a.datetime().required(),
         ai_confidence: a.integer(),
         ai_comment: a.string(),
-    }).authorization(allow => [allow.publicApiKey()]),
+    }).authorization(allow => [allow.authenticated()]),
 
     Trade: a.model({
         symbol: a.string().required(),
@@ -35,19 +35,19 @@ const schema = a.schema({
         opened_at: a.datetime().required(),
         closed_at: a.datetime(),
         ai_analysis: a.string(),
-    }).authorization(allow => [allow.publicApiKey()]),
+    }).authorization(allow => [allow.authenticated()]),
 
     TradingConfig: a.model({
         cadence: a.enum(['FAST_5S', 'STANDARD_1M', 'SLOW_10M']).required(),
         enabled: a.boolean().required(),
         fast_execution_arn: a.string(),
         updated_at: a.datetime().required(),
-    }).authorization(allow => [allow.publicApiKey()]),
+    }).authorization(allow => [allow.authenticated()]),
 
     WsConnection: a.model({
         connection_id: a.string().required(),
         connected_at: a.datetime().required(),
-    }).authorization(allow => [allow.publicApiKey()]),
+    }).authorization(allow => [allow.authenticated()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -55,9 +55,6 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
     schema,
     authorizationModes: {
-        defaultAuthorizationMode: 'apiKey',
-        apiKeyAuthorizationMode: {
-            expiresInDays: 30,
-        },
+        defaultAuthorizationMode: 'userPool',
     },
 });

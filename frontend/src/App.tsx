@@ -3,6 +3,9 @@ import axios from 'axios';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
 import outputs from './amplify_outputs.json';
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 interface DashboardStats {
     totalEquity: number;
@@ -66,6 +69,21 @@ function App() {
             axios.defaults.baseURL = apiUrl;
             console.log('API URL set to:', apiUrl);
         }
+
+        const interceptor = axios.interceptors.request.use(async (config) => {
+            try {
+                const session = await fetchAuthSession();
+                const token = session.tokens?.idToken?.toString();
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
+            } catch (e) {
+                // ignore
+            }
+            return config;
+        });
+
+        return () => axios.interceptors.request.eject(interceptor);
     }, []);
 
     useEffect(() => {
@@ -487,7 +505,11 @@ function App() {
         </div>
     );
 
-    return content();
+    return (
+        <Authenticator>
+            {({ signOut }) => content(signOut)}
+        </Authenticator>
+    );
 }
 
 export default App;

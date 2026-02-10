@@ -6,6 +6,7 @@ import { tradingRunner } from './functions/trading-runner/resource';
 import { ws } from './functions/ws/resource';
 import { HttpApi, HttpMethod, CorsHttpMethod, WebSocketApi, WebSocketStage } from 'aws-cdk-lib/aws-apigatewayv2';
 import { HttpLambdaIntegration, WebSocketLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
+import { HttpJwtAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 import { Duration, Stack } from 'aws-cdk-lib';
 import { Rule, Schedule, RuleTargetInput } from 'aws-cdk-lib/aws-events';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
@@ -33,6 +34,14 @@ const httpApi = new HttpApi(apiStack, 'HttpApi', {
   },
 });
 
+const httpAuthorizer = new HttpJwtAuthorizer(
+  'CognitoAuthorizer',
+  backend.auth.resources.userPool.userPoolProviderUrl,
+  {
+    jwtAudience: [backend.auth.resources.userPoolClient.userPoolClientId],
+  }
+);
+
 // Create Lambda integration
 const integration = new HttpLambdaIntegration(
   'ApiIntegration',
@@ -44,6 +53,7 @@ httpApi.addRoutes({
   path: '/api/{proxy+}',
   methods: [HttpMethod.ANY],
   integration,
+  authorizer: httpAuthorizer,
 });
 
 // WebSocket API for real-time updates
