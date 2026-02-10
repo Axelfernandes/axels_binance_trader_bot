@@ -1,26 +1,13 @@
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - npm ci --prefix amplify
-        - npx --prefix amplify tsc --project amplify/tsconfig.json
-        - npm install -g --force @aws-amplify/backend-cli
-        - echo "Branch is $AWS_BRANCH"
-        - echo "App ID is $AWS_APP_ID"
-        - echo "All AWS vars:" && env | grep AWS
-        - npx ampx pipeline-deploy --branch "$AWS_BRANCH" --app-id "$AWS_APP_ID"
 frontend:
   phases:
     preBuild:
       commands:
-        - cd frontend && npm ci
+        - npm ci --prefix amplify
+        - npm ci --prefix frontend
     build:
       commands:
-        - cd frontend && echo "VITE_API_URL=$VITE_API_URL" >> .env.production
-        # Copy the generated outputs file to where frontend expects it
-        - cp amplify_outputs.json frontend/src/amplify_outputs.json
-        - cd frontend && npm run build
+        - npm run build --prefix frontend
   artifacts:
     baseDirectory: frontend/dist
     files:
@@ -28,4 +15,5 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+      - amplify/node_modules/**/*
       - frontend/node_modules/**/*
