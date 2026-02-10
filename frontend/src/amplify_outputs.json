@@ -1,9 +1,6 @@
+```json
 {
   "data": {
-    "url": "https://yavlbz4nmzephc6xmlrjuv6rti.appsync-api.us-west-2.amazonaws.com/graphql",
-    "aws_region": "us-west-2",
-    "api_key": "da2-qhfzgxli3jdufdlsyamb2dwl2i",
-    "default_authorization_type": "API_KEY",
     "authorization_types": [
       "AWS_IAM"
     ],
