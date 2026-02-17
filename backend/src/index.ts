@@ -4,18 +4,49 @@ import dotenv from 'dotenv';
 import { WebSocketServer } from 'ws';
 import http from 'http';
 import { CandleChartInterval } from 'binance-api-node';
-import client from './config/database'; // Amplify Client
+import type { Query } from 'firebase-admin/firestore';
+import { db } from './config/database';
 import tradingService from './services/trading.service';
 import binanceService from './services/binance.service';
 import logger from './utils/logger';
 import geminiService from './services/gemini.service';
-// import { authMiddleware } from './middleware/auth';
+import { authMiddleware } from './middleware/firebaseAuth';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
+
+type TradingConfig = {
+    id: string;
+    cadence: string;
+    enabled: boolean;
+    updated_at: string;
+};
+
+const CONFIG_ID = 'main';
+const DEFAULT_CONFIG = {
+    cadence: 'STANDARD_1M',
+    enabled: true,
+};
+
+async function getOrCreateConfig(): Promise<TradingConfig> {
+    const ref = db.collection('tradingConfig').doc(CONFIG_ID);
+    const snap = await ref.get();
+    if (!snap.exists) {
+        const payload = { ...DEFAULT_CONFIG, updated_at: new Date().toISOString() };
+        await ref.set(payload);
+        return { id: ref.id, ...payload };
+    }
+    const data = snap.data() as Omit<TradingConfig, 'id'> | undefined;
+    return {
+        id: snap.id,
+        cadence: data?.cadence || DEFAULT_CONFIG.cadence,
+        enabled: typeof data?.enabled === 'boolean' ? data.enabled : DEFAULT_CONFIG.enabled,
+        updated_at: data?.updated_at || new Date().toISOString(),
+    };
+}
 
 // WebSocket Server
 const wss = new WebSocketServer({ server });
@@ -48,17 +79,13 @@ app.get('/api/account/balance', async (req, res) => {
 // Get account snapshots (equity over time)
 app.get('/api/account/snapshots', async (req, res) => {
     try {
-        const { data: snapshots } = await client.models.AccountSnapshot.list({
-            limit: 100,
-            sortDirection: 'DESC' // Note: creation time sort depends on schema keys, usually listed naturally or needs index
-            // For now assuming list returns unordered or default order, frontend might need sorting
-        });
+        const snapshotsSnap = await db
+            .collection('accountSnapshots')
+            .orderBy('timestamp', 'desc')
+            .limit(100)
+            .get();
 
-        // Manual sort if needed since DynamoDB scan/query order varies without index
-        const sorted = snapshots.sort((a: any, b: any) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-        );
-
+        const sorted = snapshotsSnap.docs.map(d => d.data());
         res.json(sorted);
     } catch (error: any) {
         logger.error('Error fetching snapshots:', error.message);
@@ -70,16 +97,8 @@ app.get('/api/account/snapshots', async (req, res) => {
 app.get('/api/signals', async (req, res) => {
     try {
         // limit is ignored in basic list unless implemented, fetching default page
-        const { data: signals } = await client.models.Signal.list({
-            limit: 20
-        });
-
-        // Parse rationale string back to JSON if stored as string
-        const formatted = signals.map((s: any) => ({
-            ...s,
-            rationale: typeof s.rationale === 'string' ? JSON.parse(s.rationale) : s.rationale
-        })).sort((a: any, b: any) => new Date(b.generated_at).getTime() - new Date(a.generated_at).getTime());
-
+        const signalsSnap = await db.collection('signals').orderBy('generated_at', 'desc').limit(20).get();
+        const formatted = signalsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         res.json(formatted);
     } catch (error: any) {
         logger.error('Error fetching signals:', error.message);
@@ -91,24 +110,69 @@ app.get('/api/signals', async (req, res) => {
 app.get('/api/trades', async (req, res) => {
     try {
         const status = req.query.status as string;
-        let filter: any = {};
-
+        let query: Query = db.collection('trades');
         if (status) {
-            filter.status = { eq: status.toUpperCase() };
+            query = query.where('status', '==', status.toUpperCase());
         }
-
-        const { data: trades } = await client.models.Trade.list({
-            filter,
-            limit: 50
-        });
-
-        const sorted = trades.sort((a: any, b: any) =>
-            new Date(b.opened_at).getTime() - new Date(a.opened_at).getTime()
-        );
-
+        const tradesSnap = await query.orderBy('opened_at', 'desc').limit(50).get();
+        const sorted = tradesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         res.json(sorted);
     } catch (error: any) {
         logger.error('Error fetching trades:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Close a trade manually
+app.post('/api/trades/:id/close', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        // Get the trade
+        const tradeDoc = await db.collection('trades').doc(id).get();
+        if (!tradeDoc.exists) {
+            return res.status(404).json({ error: 'Trade not found' });
+        }
+        
+        const trade = tradeDoc.data();
+        if (trade?.status !== 'OPEN') {
+            return res.status(400).json({ error: 'Trade is not open' });
+        }
+        
+        // Get current price
+        const currentPrice = await binanceService.getCurrentPrice(trade.symbol);
+        
+        // Place sell order (in paper mode, this just logs)
+        await binanceService.placeMarketOrder(
+            trade.symbol,
+            'SELL',
+            trade.quantity
+        );
+        
+        // Calculate PnL
+        const realizedPnl = (currentPrice - trade.entry_price) * trade.quantity;
+        const realizedPnlPercent = ((currentPrice - trade.entry_price) / trade.entry_price) * 100;
+        
+        // Update trade in database
+        await db.collection('trades').doc(id).update({
+            status: 'CLOSED',
+            exit_price: currentPrice,
+            realized_pnl: realizedPnl,
+            realized_pnl_percent: realizedPnlPercent,
+            closed_at: new Date().toISOString(),
+            close_reason: 'MANUAL'
+        });
+        
+        logger.info(`✅ Trade closed manually: ${trade.symbol} | PnL: $${realizedPnl.toFixed(2)} (${realizedPnlPercent.toFixed(2)}%)`);
+        
+        res.json({
+            message: 'Trade closed successfully',
+            tradeId: id,
+            realizedPnl,
+            realizedPnlPercent
+        });
+    } catch (error: any) {
+        logger.error('Error closing trade:', error.message);
         res.status(500).json({ error: error.message });
     }
 });
@@ -178,6 +242,60 @@ app.post('/api/trading/stop', (req, res) => {
     }
 });
 
+// Get trading config
+app.get('/api/trading/config', async (req, res) => {
+    try {
+        const config = await getOrCreateConfig();
+        res.json(config);
+    } catch (error: any) {
+        logger.error('Error fetching trading config:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Update trading config (cadence + enabled)
+app.post('/api/trading/config', async (req, res) => {
+    try {
+        const { cadence, enabled } = req.body || {};
+        const ref = db.collection('tradingConfig').doc(CONFIG_ID);
+        const current = await getOrCreateConfig();
+
+        const next = {
+            cadence: cadence || current.cadence,
+            enabled: typeof enabled === 'boolean' ? enabled : current.enabled,
+            updated_at: new Date().toISOString(),
+        };
+
+        await ref.set(next, { merge: true });
+        res.json({ id: CONFIG_ID, ...next });
+    } catch (error: any) {
+        logger.error('Error updating trading config:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Run a single trading cycle (for Cloud Scheduler)
+app.post('/api/trading/run', async (req, res) => {
+    try {
+        const cadence = (req.query.cadence as string) || req.body?.cadence;
+        const config = await getOrCreateConfig();
+
+        if (!config.enabled) {
+            return res.json({ skipped: 'disabled' });
+        }
+
+        if (cadence && config.cadence !== cadence) {
+            return res.json({ skipped: `cadence mismatch (${config.cadence} vs ${cadence})` });
+        }
+
+        await tradingService.runOnce();
+        res.json({ ok: true, cadence: config.cadence });
+    } catch (error: any) {
+        logger.error('Error running trading cycle:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get Market Brief
 app.get('/api/market-brief', async (req, res) => {
     try {
@@ -201,20 +319,19 @@ app.get('/api/market-brief', async (req, res) => {
 app.get('/api/dashboard/stats', async (req, res) => {
     try {
         // Get account snapshots
-        const { data: snapshots } = await client.models.AccountSnapshot.list({ limit: 100 }); // List some to find latest
-        const latestSnapshot = snapshots.sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
+        const snapshotsSnap = await db.collection('accountSnapshots').orderBy('timestamp', 'desc').limit(1).get();
+        const latestSnapshot = snapshotsSnap.docs[0]?.data();
 
         // Get open positions
-        const { data: openTrades } = await client.models.Trade.list({
-            filter: { status: { eq: 'OPEN' } }
-        });
+        const openTradesSnap = await db.collection('trades').where('status', '==', 'OPEN').get();
+        const openTrades = openTradesSnap.docs.map(d => d.data());
 
         // Get current day's closed trades for PnL
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        const { data: allTrades } = await client.models.Trade.list({}); // Warning: Scan operation
-        const closedTrades = allTrades.filter((t: any) => t.status === 'CLOSED');
+        const closedTradesSnap = await db.collection('trades').where('status', '==', 'CLOSED').get();
+        const closedTrades = closedTradesSnap.docs.map(d => d.data());
 
         const dailyTrades = closedTrades.filter((t: any) => new Date(t.closed_at) >= today);
         const dailyPnl = dailyTrades.reduce((sum: number, t: any) => sum + (t.realized_pnl || 0), 0);

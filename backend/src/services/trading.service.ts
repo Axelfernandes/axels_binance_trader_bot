@@ -3,7 +3,7 @@ import binanceService from './binance.service';
 import strategyService, { Signal } from './strategy.service';
 import riskService from './risk.service';
 import geminiService from './gemini.service';
-import client from '../config/database';
+import { db } from '../config/database';
 import logger from '../utils/logger';
 
 interface Trade {
@@ -53,6 +53,13 @@ class TradingService {
     }
 
     /**
+     * Run a single trading cycle (for scheduler)
+     */
+    async runOnce() {
+        await this.runTradingCycle();
+    }
+
+    /**
      * Stop the trading engine
      */
     stop() {
@@ -71,19 +78,19 @@ class TradingService {
         try {
             logger.info('--- Trading Cycle Started ---');
 
-            // 1. Get account balance
-            const usdtBalance = await binanceService.getUSDTBalance();
-            // logger.info(`Current USDT balance: $${usdtBalance.toFixed(2)}`); // Reduce log noise
+            // 1. Get account balance and calculate total equity
+            const { totalEquity, availableBalance } = await this.calculateTotalEquity();
+            logger.info(`Total Equity: $${totalEquity.toFixed(2)}, Available Balance: $${availableBalance.toFixed(2)}`);
 
             // Save account snapshot
-            await this.saveAccountSnapshot(usdtBalance);
+            await this.saveAccountSnapshot(totalEquity, availableBalance);
 
             // 2. Check and manage open positions
             await this.manageOpenPositions();
 
             // 3. Generate and evaluate signals for each symbol
             for (const symbol of this.symbols) {
-                await this.evaluateSymbol(symbol, usdtBalance);
+                await this.evaluateSymbol(symbol, availableBalance);
             }
 
             // logger.info('--- Trading Cycle Completed ---\n'); // Reduce log noise
@@ -185,22 +192,31 @@ class TradingService {
      */
     private async manageOpenPositions() {
         try {
-            const { data: openTrades } = await client.models.Trade.list({
-                filter: { status: { eq: 'OPEN' } },
-                limit: 50
-            });
+            const openTradesSnap = await db.collection('trades').where('status', '==', 'OPEN').limit(50).get();
+            const openTrades = openTradesSnap.docs.map(d => {
+                const data = d.data();
+                return {
+                    id: d.id,
+                    symbol: data.symbol,
+                    side: data.side,
+                    entryPrice: data.entry_price,
+                    quantity: data.quantity,
+                    stopLoss: data.stop_loss,
+                    takeProfit: data.take_profit,
+                    status: data.status,
+                };
+            }) as Trade[];
 
             // Cast to compatible type or map if necessary
-            // Note: Amplify 'list' returns fully typed items based on schema
             for (const trade of openTrades) {
                 const currentPrice = await binanceService.getCurrentPrice(trade.symbol);
                 const ohlcv = await binanceService.getKlines(trade.symbol, CandleChartInterval.ONE_MINUTE, 100);
 
                 const exitCheck = strategyService.shouldExitPosition(
-                    parseFloat(trade.entry_price),
+                    trade.entryPrice,
                     currentPrice,
-                    parseFloat(trade.stop_loss),
-                    parseFloat(trade.take_profit),
+                    trade.stopLoss,
+                    trade.takeProfit,
                     ohlcv,
                     undefined,
                     undefined,
@@ -222,7 +238,7 @@ class TradingService {
     /**
      * Close a position
      */
-    private async closePosition(trade: any, exitPrice: number, reason: string) {
+    private async closePosition(trade: Trade, exitPrice: number, reason: string) {
         try {
             // Place sell order
             await binanceService.placeMarketOrder(
@@ -233,19 +249,23 @@ class TradingService {
 
             // Calculate PnL
             const realizedPnl =
-                (exitPrice - trade.entry_price) *
+                (exitPrice - trade.entryPrice) *
                 trade.quantity;
             const realizedPnlPercent =
-                ((exitPrice - trade.entry_price) /
-                    trade.entry_price) *
+                ((exitPrice - trade.entryPrice) /
+                    trade.entryPrice) *
                 100;
 
             // --- AI ENHANCEMENT: Post-Mortem Analysis ---
             const tradeData = { ...trade, exit_price: exitPrice, realized_pnl: realizedPnl, realized_pnl_percent: realizedPnlPercent };
             const aiAnalysis = await geminiService.analyzeTradeResult(tradeData);
 
+            if (!trade.id) {
+                throw new Error('Cannot update trade: missing trade ID');
+            }
+
             // Update trade in database
-            await client.models.Trade.update({
+            await db.collection('trades').doc(trade.id).update({
                 id: trade.id,
                 status: 'CLOSED',
                 exit_price: exitPrice,
@@ -268,7 +288,7 @@ class TradingService {
      */
     private async saveSignal(signal: Signal) {
         try {
-            await client.models.Signal.create({
+            await db.collection('signals').add({
                 symbol: signal.symbol,
                 direction: signal.direction as "LONG" | "SHORT", // Cast to enum
                 entry_min: signal.entryMin,
@@ -276,7 +296,7 @@ class TradingService {
                 stop_loss: signal.stopLoss,
                 take_profit_1: signal.takeProfit1,
                 max_risk_percent: signal.maxRiskPercent,
-                rationale: JSON.stringify(signal.rationale),
+                rationale: signal.rationale,
                 ai_confidence: signal.aiConfidence ? Math.round(signal.aiConfidence) : undefined, // Ensure integer
                 ai_comment: signal.aiComment,
                 generated_at: new Date().toISOString()
@@ -291,7 +311,7 @@ class TradingService {
      */
     private async saveTrade(trade: Trade): Promise<string> {
         try {
-            const { data: newTrade } = await client.models.Trade.create({
+            const newTradeRef = await db.collection('trades').add({
                 symbol: trade.symbol,
                 side: trade.side,
                 entry_price: trade.entryPrice,
@@ -300,14 +320,10 @@ class TradingService {
                 take_profit: trade.takeProfit,
                 status: trade.status,
                 opened_at: new Date().toISOString(),
-                // Amplify doesn't support 'is_paper_trade' in the schema we made yet? 
-                // Wait, I missed adding 'is_paper_trade' to the schema in step 441. 
-                // I'll skip it for now or rely on loose matching if schema allows, but schema is strict.
-                // Assuming schema matches what I defined.
             });
 
-            if (!newTrade) throw new Error("Failed to create trade");
-            return (newTrade as any).id;
+            if (!newTradeRef) throw new Error("Failed to create trade");
+            return newTradeRef.id;
         } catch (error: any) {
             logger.error('Error saving trade:', error.message);
             throw error;
@@ -315,13 +331,53 @@ class TradingService {
     }
 
     /**
+     * Calculate total account equity including all assets
+     */
+    private async calculateTotalEquity(): Promise<{ totalEquity: number; availableBalance: number }> {
+        try {
+            // Get all account balances
+            const balances = await binanceService.getAccountBalance();
+
+            // Get USDT balance (available for trading)
+            const usdtBalance = balances.find(b => b.asset === 'USDT');
+            const availableBalance = usdtBalance ? usdtBalance.free : 0;
+
+            // Calculate total equity by converting all assets to USDT value
+            let totalEquity = availableBalance;
+
+            for (const balance of balances) {
+                if (balance.asset === 'USDT') continue; // Already counted
+
+                const assetAmount = balance.free + balance.locked;
+                if (assetAmount <= 0) continue;
+
+                try {
+                    // Get current price of asset in USDT
+                    const symbol = `${balance.asset}USDT`;
+                    const price = await binanceService.getCurrentPrice(symbol);
+                    const assetValue = assetAmount * price;
+                    totalEquity += assetValue;
+                } catch (error) {
+                    // If price fetch fails (e.g., for assets not traded against USDT), skip
+                    logger.warn(`Could not get price for ${balance.asset}, excluding from total equity`);
+                }
+            }
+
+            return { totalEquity, availableBalance };
+        } catch (error: any) {
+            logger.error('Error calculating total equity:', error.message);
+            throw error;
+        }
+    }
+
+    /**
      * Save account snapshot
      */
-    private async saveAccountSnapshot(totalEquity: number) {
+    private async saveAccountSnapshot(totalEquity: number, availableBalance: number) {
         try {
-            await client.models.AccountSnapshot.create({
+            await db.collection('accountSnapshots').add({
                 total_equity: totalEquity,
-                available_balance: totalEquity,
+                available_balance: availableBalance,
                 timestamp: new Date().toISOString()
             });
         } catch (error: any) {

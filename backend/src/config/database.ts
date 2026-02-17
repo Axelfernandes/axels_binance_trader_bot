@@ -1,11 +1,13 @@
-import { Amplify } from 'aws-amplify';
-import { generateClient } from 'aws-amplify/data';
-import outputs from '../../../amplify_outputs.json';
+import { initializeApp, getApps, applicationDefault } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
-// Configure Amplify for backend usage
-Amplify.configure(outputs);
+// In Cloud Run, ADC is provided by the runtime service account.
+// For local dev, run: gcloud auth application-default login
+const app = getApps().length
+  ? getApps()[0]
+  : initializeApp({
+      credential: applicationDefault(),
+      projectId: 'myportfoliowebsite-485116'
+    });
 
-// Create client (untyped to avoid rootDir issues with generated schema)
-const client = generateClient<any>();
-
-export default client;
+export const db = getFirestore(app);
