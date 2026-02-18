@@ -45,11 +45,11 @@ class TradingService {
             return;
         }
 
-        // Run immediately, then every 5 seconds
+        // Run immediately, then every 60 seconds
         await this.runTradingCycle();
-        this.intervalId = setInterval(() => this.runTradingCycle(), 5 * 1000);
+        this.intervalId = setInterval(() => this.runTradingCycle(), 60 * 1000);
 
-        logger.info('✅ Trading engine started (running every 5 seconds)');
+        logger.info('✅ Trading engine started (running every 60 seconds)');
     }
 
     /**
