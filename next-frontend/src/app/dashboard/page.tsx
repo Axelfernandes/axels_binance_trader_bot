@@ -67,6 +67,7 @@ export default function DashboardPage() {
   const [tradingConfig, setTradingConfig] = useState<{ cadence: string; enabled: boolean } | null>(null);
   const [marketBrief, setMarketBrief] = useState<string>("");
   const [selectedSymbol, setSelectedSymbol] = useState<string>("BTCUSDT");
+  const [backendError, setBackendError] = useState<string>("");
 
   useEffect(() => {
     loadData();
@@ -77,7 +78,7 @@ export default function DashboardPage() {
 
   const loadData = async () => {
     try {
-      const [statsRes, openRes, closedRes, signalsRes, configRes, briefRes] = await Promise.all([
+      const [statsRes, openRes, closedRes, signalsRes, configRes, briefRes] = await Promise.allSettled([
         fetchDashboardStats(),
         fetchOpenTrades(),
         fetchClosedTrades(),
@@ -86,19 +87,60 @@ export default function DashboardPage() {
         fetchMarketBrief()
       ]);
 
-      setStats(statsRes.data);
-      setOpenPositions(openRes.data || []);
-      setClosedHistory(closedRes.data || []);
-      setSignals(signalsRes.data?.slice(0, 10) || []);
-      setTradingConfig(configRes.data);
-      setMarketBrief(briefRes.data?.brief || "");
+      setBackendError("");
+      let failedCalls = 0;
+
+      if (statsRes.status === "fulfilled") {
+        setStats(statsRes.value.data);
+      } else {
+        failedCalls += 1;
+      }
+
+      if (openRes.status === "fulfilled") {
+        setOpenPositions(openRes.value.data || []);
+      } else {
+        failedCalls += 1;
+      }
+
+      if (closedRes.status === "fulfilled") {
+        setClosedHistory(closedRes.value.data || []);
+      } else {
+        failedCalls += 1;
+      }
+
+      if (signalsRes.status === "fulfilled") {
+        setSignals(signalsRes.value.data?.slice(0, 10) || []);
+      } else {
+        failedCalls += 1;
+      }
+
+      if (configRes.status === "fulfilled") {
+        setTradingConfig(configRes.value.data);
+      } else {
+        failedCalls += 1;
+      }
+
+      if (briefRes.status === "fulfilled") {
+        setMarketBrief(briefRes.value.data?.brief || "");
+      } else {
+        failedCalls += 1;
+      }
+
+      if (failedCalls > 0) {
+        setBackendError(`Backend unavailable for ${failedCalls} request(s). Check local API auth/config.`);
+      }
       
       if (!chartData[selectedSymbol]) {
-        const klinesRes = await fetchKlines(selectedSymbol);
-        setChartData(prev => ({ ...prev, [selectedSymbol]: klinesRes.data || [] }));
+        try {
+          const klinesRes = await fetchKlines(selectedSymbol);
+          setChartData(prev => ({ ...prev, [selectedSymbol]: klinesRes.data || [] }));
+        } catch {
+          // keep page usable even when chart endpoint fails
+        }
       }
     } catch (error) {
       console.error("Failed to load data:", error);
+      setBackendError("Backend request failed. Check local API auth/config.");
     } finally {
       setLoading(false);
     }
@@ -166,6 +208,11 @@ export default function DashboardPage() {
     <div className="app">
       <div className="main-content">
         {/* Stats Grid */}
+        {backendError && (
+          <div className="glass-card" style={{ borderLeft: "4px solid #f59e0b", marginBottom: "16px" }}>
+            <div style={{ fontSize: "14px", color: "var(--text-secondary)" }}>{backendError}</div>
+          </div>
+        )}
         <div className="stats-grid">
           <div className="stat-card">
             <span className="stat-label">Total Equity</span>
