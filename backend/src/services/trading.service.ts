@@ -17,6 +17,13 @@ interface Trade {
     status: 'OPEN' | 'CLOSED';
 }
 
+interface EvaluationResult {
+    signalGenerated: boolean;
+    tradeExecuted: boolean;
+    skippedByConfidence: boolean;
+    validationRejected: boolean;
+}
+
 class TradingService {
     private symbols: string[] = [
         'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT',
@@ -75,25 +82,39 @@ class TradingService {
      * Main trading cycle
      */
     private async runTradingCycle() {
+        const cycleStartedAt = Date.now();
         try {
-            logger.info('--- Trading Cycle Started ---');
+            logger.debug('Trading cycle started');
 
             // 1. Get account balance and calculate total equity
             const { totalEquity, availableBalance } = await this.calculateTotalEquity();
-            logger.info(`Total Equity: $${totalEquity.toFixed(2)}, Available Balance: $${availableBalance.toFixed(2)}`);
 
             // Save account snapshot
             await this.saveAccountSnapshot(totalEquity, availableBalance);
 
             // 2. Check and manage open positions
-            await this.manageOpenPositions();
+            const openPositionsClosed = await this.manageOpenPositions();
+
+            let symbolsEvaluated = 0;
+            let signalsGenerated = 0;
+            let tradesExecuted = 0;
+            let skippedByConfidence = 0;
+            let validationRejected = 0;
 
             // 3. Generate and evaluate signals for each symbol
             for (const symbol of this.symbols) {
-                await this.evaluateSymbol(symbol, availableBalance);
+                const result = await this.evaluateSymbol(symbol, availableBalance);
+                symbolsEvaluated += 1;
+                if (result.signalGenerated) signalsGenerated += 1;
+                if (result.tradeExecuted) tradesExecuted += 1;
+                if (result.skippedByConfidence) skippedByConfidence += 1;
+                if (result.validationRejected) validationRejected += 1;
             }
 
-            // logger.info('--- Trading Cycle Completed ---\n'); // Reduce log noise
+            const durationMs = Date.now() - cycleStartedAt;
+            logger.info(
+                `Cycle summary | durationMs=${durationMs} equity=${totalEquity.toFixed(2)} available=${availableBalance.toFixed(2)} symbols=${symbolsEvaluated} signals=${signalsGenerated} trades=${tradesExecuted} closed=${openPositionsClosed} lowConfidenceSkips=${skippedByConfidence} riskRejected=${validationRejected}`
+            );
         } catch (error: any) {
             logger.error('Error in trading cycle:', error.message);
         }
@@ -102,7 +123,7 @@ class TradingService {
     /**
      * Evaluate a symbol for trading opportunities
      */
-    private async evaluateSymbol(symbol: string, equity: number) {
+    private async evaluateSymbol(symbol: string, equity: number): Promise<EvaluationResult> {
         try {
             // Fetch OHLCV data (1m timeframe for faster signals, last 100 candles)
             const ohlcv = await binanceService.getKlines(symbol, CandleChartInterval.ONE_MINUTE, 100);
@@ -111,41 +132,70 @@ class TradingService {
             const signal = await strategyService.generateSignal(symbol, ohlcv);
 
             if (signal.direction !== 'NO_TRADE') {
-                logger.info(`Technical signal for ${symbol}: ${signal.direction}`);
+                logger.debug(`Technical signal for ${symbol}: ${signal.direction}`);
 
                 // --- AI ENHANCEMENT: Analyze Signal with Gemini ---
                 const aiAnalysis = await geminiService.analyzeSignal(symbol, signal.rationale, ohlcv);
                 signal.aiConfidence = aiAnalysis.confidence;
                 signal.aiComment = aiAnalysis.comment;
 
-                logger.info(`AI Analysis for ${symbol}: ${signal.aiConfidence}% confidence - ${signal.aiComment}`);
+                logger.debug(`AI Analysis for ${symbol}: ${signal.aiConfidence}% confidence - ${signal.aiComment}`);
 
                 // Save signal to database
                 await this.saveSignal(signal);
 
                 // Risk Filter: Check AI Confidence before validating trade
                 if (signal.aiConfidence !== undefined && signal.aiConfidence < 75) {
-                    logger.warn(`Trade skipped: AI confidence too low (${signal.aiConfidence}%)`);
-                    return;
+                    logger.debug(`Trade skipped for ${symbol}: AI confidence too low (${signal.aiConfidence}%)`);
+                    return {
+                        signalGenerated: true,
+                        tradeExecuted: false,
+                        skippedByConfidence: true,
+                        validationRejected: false,
+                    };
                 }
 
                 const validation = await riskService.validateTrade(signal, equity);
 
                 if (validation.valid && validation.positionSize) {
-                    await this.executeTrade(signal, validation.positionSize);
+                    const tradeExecuted = await this.executeTrade(signal, validation.positionSize);
+                    return {
+                        signalGenerated: true,
+                        tradeExecuted,
+                        skippedByConfidence: false,
+                        validationRejected: false,
+                    };
                 } else {
-                    logger.warn(`Trade validation failed: ${validation.reason}`);
+                    logger.debug(`Trade validation failed for ${symbol}: ${validation.reason}`);
+                    return {
+                        signalGenerated: true,
+                        tradeExecuted: false,
+                        skippedByConfidence: false,
+                        validationRejected: true,
+                    };
                 }
             }
+            return {
+                signalGenerated: false,
+                tradeExecuted: false,
+                skippedByConfidence: false,
+                validationRejected: false,
+            };
         } catch (error: any) {
             logger.error(`Error evaluating ${symbol}:`, error.message);
+            return {
+                signalGenerated: false,
+                tradeExecuted: false,
+                skippedByConfidence: false,
+                validationRejected: false,
+            };
         }
     }
 
     /**
      * Execute a trade (paper or live)
      */
-    private async executeTrade(signal: Signal, positionSize: number) {
+    private async executeTrade(signal: Signal, positionSize: number): Promise<boolean> {
         try {
             const currentPrice = await binanceService.getCurrentPrice(signal.symbol);
 
@@ -182,16 +232,19 @@ class TradingService {
             );
 
             logger.info(`✅ Trade executed successfully (ID: ${tradeId})`);
+            return true;
         } catch (error: any) {
             logger.error('Error executing trade:', error.message);
+            return false;
         }
     }
 
     /**
      * Manage open positions (check for exits)
      */
-    private async manageOpenPositions() {
+    private async manageOpenPositions(): Promise<number> {
         try {
+            let closedPositions = 0;
             const openTradesSnap = await db.collection('trades').where('status', '==', 'OPEN').limit(50).get();
             const openTrades = openTradesSnap.docs.map(d => {
                 const data = d.data();
@@ -228,10 +281,13 @@ class TradingService {
                         `Closing position for ${trade.symbol}: ${exitCheck.reason}`
                     );
                     await this.closePosition(trade, currentPrice, exitCheck.reason);
+                    closedPositions += 1;
                 }
             }
+            return closedPositions;
         } catch (error: any) {
             logger.error('Error managing open positions:', error.message);
+            return 0;
         }
     }
 

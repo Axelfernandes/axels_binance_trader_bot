@@ -1,5 +1,5 @@
 import { Signal } from './strategy.service';
-import client from '../config/database';
+import { db } from '../config/database';
 import logger from '../utils/logger';
 
 export interface RiskValidation {
@@ -36,7 +36,7 @@ class RiskService {
         // Position size = risk amount / stop distance
         const positionSize = riskAmount / stopDistance;
 
-        logger.info(
+        logger.debug(
             `Position sizing: Equity=$${equity}, Risk=$${riskAmount.toFixed(2)}, Stop distance=$${stopDistance.toFixed(2)}, Position size=${positionSize.toFixed(6)}`
         );
 
@@ -124,8 +124,8 @@ class RiskService {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            const { data: allTrades } = await client.models.Trade.list({});
-            const closedTrades = allTrades.filter((t: any) => t.status === 'CLOSED');
+            const closedTradesSnap = await db.collection('trades').where('status', '==', 'CLOSED').get();
+            const closedTrades = closedTradesSnap.docs.map(d => d.data());
 
             const dailyTrades = closedTrades.filter((t: any) => new Date(t.closed_at) >= today);
             const dailyPnl = dailyTrades.reduce((sum: number, t: any) => sum + (t.realized_pnl || 0), 0);
@@ -153,14 +153,8 @@ class RiskService {
      */
     async hasOpenPosition(symbol: string): Promise<boolean> {
         try {
-            const { data: openTrades } = await client.models.Trade.list({
-                filter: {
-                    symbol: { eq: symbol },
-                    status: { eq: 'OPEN' }
-                }
-            });
-
-            return openTrades.length > 0;
+            const openTradesSnap = await db.collection('trades').where('symbol', '==', symbol).where('status', '==', 'OPEN').get();
+            return !openTradesSnap.empty;
         } catch (error: any) {
             logger.error('Error checking open positions:', error.message);
             return false;
@@ -172,11 +166,8 @@ class RiskService {
      */
     async getOpenPositionsCount(): Promise<number> {
         try {
-            const { data: openTrades } = await client.models.Trade.list({
-                filter: { status: { eq: 'OPEN' } }
-            });
-
-            return openTrades.length;
+            const openTradesSnap = await db.collection('trades').where('status', '==', 'OPEN').get();
+            return openTradesSnap.size;
         } catch (error: any) {
             logger.error('Error getting open positions count:', error.message);
             return 0;

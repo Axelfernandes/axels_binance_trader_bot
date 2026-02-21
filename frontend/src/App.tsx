@@ -2,10 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './styles/App.css';
 import { PriceChart } from './components/PriceChart';
-import outputs from './amplify_outputs.json';
-import { Authenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-import { fetchAuthSession } from 'aws-amplify/auth';
 
 interface DashboardStats {
     totalEquity: number;
@@ -64,26 +60,8 @@ function App() {
     const [tradingConfig, setTradingConfig] = useState<{ cadence: string; enabled: boolean } | null>(null);
 
     useEffect(() => {
-        const apiUrl = import.meta.env.VITE_API_URL || (outputs as any).custom?.API?.url;
-        if (apiUrl) {
-            axios.defaults.baseURL = apiUrl;
-            console.log('API URL set to:', apiUrl);
-        }
-
-        const interceptor = axios.interceptors.request.use(async (config) => {
-            try {
-                const session = await fetchAuthSession();
-                const token = session.tokens?.idToken?.toString();
-                if (token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
-            } catch (e) {
-                // ignore
-            }
-            return config;
-        });
-
-        return () => axios.interceptors.request.eject(interceptor);
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4500';
+        axios.defaults.baseURL = apiUrl;
     }, []);
 
     useEffect(() => {
@@ -93,11 +71,12 @@ function App() {
         const interval = setInterval(fetchData, 10000); // Poll other data every 10s
 
         // WebSocket setup for real-time prices
-        const wsUrl = (outputs as any).custom?.WS?.url;
         const isLocal = window.location.hostname === 'localhost';
         const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsHost = isLocal ? 'localhost:3001' : window.location.host;
-        const ws = new WebSocket(wsUrl || `${wsProtocol}//${wsHost}`);
+        const wsDefaultHost = isLocal ? 'localhost:4500' : window.location.host;
+        const wsUrl = import.meta.env.VITE_WS_URL || `${wsProtocol}//${wsDefaultHost}`;
+        
+        const ws = new WebSocket(wsUrl);
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -505,11 +484,14 @@ function App() {
         </div>
     );
 
+    /*
     return (
         <Authenticator>
             {({ signOut }) => content(signOut)}
         </Authenticator>
     );
+    */
+    return content();
 }
 
 export default App;

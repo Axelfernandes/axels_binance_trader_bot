@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { auth } from './firebaseClient';
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+const apiBaseUrl =
+  process.env.NODE_ENV === 'development'
+    ? process.env.NEXT_PUBLIC_DEV_API_URL || 'http://localhost:4500'
+    : process.env.NEXT_PUBLIC_API_URL || '';
 
 const api = axios.create({
   baseURL: apiBaseUrl || undefined,

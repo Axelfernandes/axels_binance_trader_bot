@@ -15,7 +15,7 @@ import { authMiddleware } from './middleware/firebaseAuth';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4500;
 const server = http.createServer(app);
 
 type TradingConfig = {
@@ -360,11 +360,15 @@ server.listen(Number(PORT), '0.0.0.0', () => {
     logger.info(`🚀 Server running on http://0.0.0.0:${PORT}`);
     logger.info(`Trading mode: ${process.env.TRADING_MODE || 'paper'}`);
 
-    // Auto-start trading engine
-    setTimeout(async () => {
-        logger.info('Auto-starting trading engine...');
-        await tradingService.start();
-    }, 2000);
+    const shouldAutoStart = process.env.AUTO_START_TRADING === 'true';
+    if (shouldAutoStart) {
+        setTimeout(async () => {
+            logger.info('Auto-starting trading engine...');
+            await tradingService.start();
+        }, 2000);
+    } else {
+        logger.info('Auto-start trading is disabled. Use /api/trading/start to start manually.');
+    }
 });
 
 // Global Error Handlers

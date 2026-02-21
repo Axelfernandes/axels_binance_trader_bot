@@ -64,7 +64,7 @@ class BinanceService {
                     locked: parseFloat(b.locked),
                 }));
 
-            logger.info(`Fetched account balance: ${balances.length} assets`);
+            logger.debug(`Fetched account balance: ${balances.length} assets`);
             return balances;
         } catch (error: any) {
             logger.error('Error fetching account balance:', error.message);
@@ -102,7 +102,7 @@ class BinanceService {
                 closeTime: c.closeTime,
             }));
 
-            logger.info(`Fetched ${ohlcv.length} candles for ${symbol} (${interval})`);
+            logger.debug(`Fetched ${ohlcv.length} candles for ${symbol} (${interval})`);
             return ohlcv;
         } catch (error: any) {
             logger.error(`Error fetching klines for ${symbol}:`, error.message);
@@ -144,7 +144,9 @@ class BinanceService {
                 quantity: quantity.toString(),
             });
 
-            logger.info(`Market order placed: ${side} ${quantity} ${symbol}`, order);
+            logger.info(
+                `Market order placed: ${side} ${quantity} ${symbol} (orderId: ${(order as any).orderId ?? 'n/a'})`
+            );
             return order as any;
         } catch (error: any) {
             logger.error(`Error placing market order:`, error.message);
@@ -180,7 +182,9 @@ class BinanceService {
                 timeInForce: 'GTC',
             });
 
-            logger.info(`Stop-loss order placed: ${side} ${quantity} ${symbol}`, order);
+            logger.info(
+                `Stop-loss order placed: ${side} ${quantity} ${symbol} (orderId: ${(order as any).orderId ?? 'n/a'})`
+            );
             return order as any;
         } catch (error: any) {
             logger.error(`Error placing stop-loss order:`, error.message);
